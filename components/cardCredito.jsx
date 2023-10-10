@@ -25,6 +25,15 @@ const CardCreditos = (props) => {
         setIsOpenEdit(false);
     };
 
+
+    // POST DE CRÉDITO
+function PostCredito () {
+    console.log('tesy')
+
+    
+}
+
+
     return (
         <>
             <div className="flex flex-col min-w-card-home-1 min-h-card-home-1 rounded-3xl  border-gray shadow-shadow-button bg-white">
@@ -63,6 +72,7 @@ const CardCreditos = (props) => {
                                                     type="text"
                                                     placeholder="Email"
                                                     id="email"
+
                                                     className="border rounded-lg border-gray p-2 mb-4 w-full"
                                                 />
                                             </div>
@@ -92,7 +102,6 @@ const CardCreditos = (props) => {
                                         <div className="flex justify-end h-16 gap-4 ">
                                             <button
                                                 onClick={openModalEdit}
-                                                type="submit"
                                                 className="bg-primary border-text border h-11 text-white py-2 px-4 rounded">
                                                 Confirmar
                                             </button>
@@ -145,8 +154,8 @@ const CardCreditos = (props) => {
                                                 Cancelar
                                             </button>
                                             <button
-
-                                                type="submit"
+                                                onClick={PostCredito}
+                                                // type="submit"
                                                 className="bg-primary border-text border h-11 text-white py-2 px-14 rounded">
                                                 Confirmar
                                             </button>

@@ -26,7 +26,7 @@ export default function Home() {
         <div className="grid grid-cols-2  items-center h-full bg-second">
 
           {/* Div coluna 1 */}
-          <div class="flex flex-col justify-around p-12 items-center h-full">
+          <div className="flex flex-col justify-around p-12 items-center h-full">
             <CardCreditos title="Crédito" subtitle="Adicione créditos ao seus usuários" titleButton="Créditos da Cantina" src={DinheiroIcon} alt="Icone de dinheiro" height={80} width={68} />
 
             {/* Card 2 - card de produtos */}
@@ -36,7 +36,7 @@ export default function Home() {
 
 
           {/* Div coluna 2 */}
-          <div class="flex flex-col p-12 justify-around items-center h-full  ">
+          <div className="flex flex-col p-12 justify-around items-center h-full  ">
             {/* Card Pedidos */}
             <div className=" relative flex flex-col min-w-card-home-1 h-[770px] rounded-3xl shadow-shadow-button  bg-white">
               {/* Div interna do card  */}
