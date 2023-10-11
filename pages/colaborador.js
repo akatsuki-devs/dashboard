@@ -8,6 +8,12 @@ import TableColaborador from "../components/tablesProdutosColaboradores";
 
 
 export default function Colaborador() {
+  const [nomeColoborador, setNomeColoborador] = useState('')
+  const [email, setEmail] = useState('')
+  const [tipo, setTipo] = useState('')
+
+
+
   // Modal de cadastro open and close
   const [isOpen, setIsOpen] = useState(false);
 
@@ -30,6 +36,14 @@ export default function Colaborador() {
     setIsOpenEdit(false);
   };
 
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Aqui você pode fazer algo com os dados do formulário, como enviá-los para o servidor
+    console.log('Dados do produto:', { nomeColoborador,email,tipo });
+
+
+  };
   return (
     <>
       <Layout>
@@ -117,6 +131,8 @@ export default function Colaborador() {
                           placeholder="Nome do colaborador"
                           id="email"
                           className="border rounded-lg border-gray p-2 mb-4 w-full"
+                          onChange={(e) => setNomeColoborador(e.target.value)}
+
                         />
                       </div>
                     </div>
@@ -129,6 +145,8 @@ export default function Colaborador() {
                           placeholder="Email do colaborador"
                           id="dinheiro"
                           className="border rounded-lg border-gray p-2 mb-4 w-full"
+                          onChange={(e) => setEmail(e.target.value)}
+
                         />
                       </div>
                     </div>
@@ -137,7 +155,8 @@ export default function Colaborador() {
                       <label htmlFor="campo">Tipo do colaborador</label>
                       <div className="pt-1">
                         <div class="relative inline-flex h-11 w-2/5">
-                          <select class="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10  py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm">
+                          <select class="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10  py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm" onChange={(e) => setTipo(e.target.value)}
+>
                             <option>Tipo 1</option>
                             <option>Tipo 2</option>
                             <option>Tipo 3</option>
@@ -157,6 +176,7 @@ export default function Colaborador() {
                         Cancelar
                       </button>
                       <button
+                      onClick={handleSubmit}
 
                         type="submit"
                         className="bg-primary border-text border h-11 text-white py-2 px-4 rounded">
