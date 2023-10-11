@@ -3,18 +3,6 @@ import { useState } from "react";
 import Image from "next/image";
 
 const CardCreditos = (props) => {
-    // estados dos inputs
-    const [email, setEmail] = useState('');
-    const [creditos, setCreditos] = useState('');
-
-    const handleEmailChange = (event) => {
-        setEmail(event.target.value);
-    };
-
-    const handleCreditosChange = (event) => {
-        setCreditos(event.target.value);
-    };
-
     // modal de adicionar credito open and close
     const [isOpen, setIsOpen] = useState(false);
 
@@ -37,18 +25,92 @@ const CardCreditos = (props) => {
         setIsOpenEdit(false);
     };
 
+    // estados dos inputs
+    const [email, setEmail] = useState('');
+    const [value, setValue] = useState('');
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+
+    const handleCreditosChange = (event) => {
+        setValue(event.target.value);
+    };
+
 
     // POST DE CRÉDITO
-    function PostCredito(event) {
-        event.preventDefault();
-        console.log('test');
-        const data = {
-            email,
-            creditos,
-        };
+    // function PostCredito(event) {
+    //     event.preventDefault();
+    //     console.log('test');
+    //     const data = {
+    //         email,
+    //         creditos,
+    //     };
 
-        console.log(data)
+    //     console.log(data)
+    // }
+
+
+    // async function PostCredito(event) {
+    //     // console.log(credito);
+    //     event.preventDefault();
+    //     // const messageError = 'Falha ao enviar crédito';
+    //     const url = 'http://10.107.144.19:3000/users/balance/DEPOSIT'
+
+
+    //     const options = {
+    //         method: 'POST',
+    //         Headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(credito)
+    //     };
+
+    //     try {
+    //         const response = await fetch(url, options);
+    //         if (response.status) {
+    //             console.log('Dados enviados!', credito);
+    //         } else {
+    //             console.log('Erro ao enviar os dados')
+    //         }
+
+    //     } catch (error) {
+    //         console.error('Ocorreu um erro na requisição', error);
+    //     }
+    //     // console.log(options)
+    // }
+    async function PostCredito(event) {
+        try {
+            event.preventDefault();
+            const url = 'http://10.107.144.19:3000/users/balance/DEPOSIT';
+
+            const credito = {
+                "email": email,
+                "value": value,
+            };
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(credito)
+            });
+
+            if (response.ok) {
+                console.log('Solicitação POST bem-sucedida!', credito);
+                setIsOpen(false);
+                setIsOpenEdit(false);
+
+                // Você pode adicionar código aqui para lidar com a resposta do servidor, se necessário
+            } else {
+                console.error('Erro na solicitação POST:', response.status, response.statusText);
+            }
+        } catch (error) {
+            console.error('Ocorreu um erro na requisição', error);
+        }
     }
+
 
     function CancelCredit() {
         setIsOpenEdit(false);
