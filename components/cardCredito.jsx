@@ -3,6 +3,18 @@ import { useState } from "react";
 import Image from "next/image";
 
 const CardCreditos = (props) => {
+    // estados dos inputs
+    const [email, setEmail] = useState('');
+    const [creditos, setCreditos] = useState('');
+
+    const handleEmailChange = (event) => {
+        setEmail(event.target.value);
+    };
+
+    const handleCreditosChange = (event) => {
+        setCreditos(event.target.value);
+    };
+
     // modal de adicionar credito open and close
     const [isOpen, setIsOpen] = useState(false);
 
@@ -27,11 +39,22 @@ const CardCreditos = (props) => {
 
 
     // POST DE CRÉDITO
-function PostCredito () {
-    console.log('tesy')
+    function PostCredito(event) {
+        event.preventDefault();
+        console.log('test');
+        const data = {
+            email,
+            creditos,
+        };
 
-    
-}
+        console.log(data)
+    }
+
+    function CancelCredit() {
+        setIsOpenEdit(false);
+        setIsOpen(false);
+
+    }
 
 
     return (
@@ -72,7 +95,7 @@ function PostCredito () {
                                                     type="text"
                                                     placeholder="Email"
                                                     id="email"
-
+                                                    onChange={handleEmailChange}
                                                     className="border rounded-lg border-gray p-2 mb-4 w-full"
                                                 />
                                             </div>
@@ -85,6 +108,7 @@ function PostCredito () {
                                                     type="text"
                                                     placeholder="R$"
                                                     id="dinheiro"
+                                                    onChange={handleCreditosChange}
                                                     className="border rounded-lg border-gray p-2 mb-4 w-full"
                                                 />
                                             </div>
@@ -118,7 +142,7 @@ function PostCredito () {
                             <div className="grid modal-container rounded-lg p-4 min-w-[465px] h-fit text-text bg-white">
                                 <div className="flex flex-col modal-content g p-4 rounded-xl">
                                     <span className="text-lg font-semibold my-4 ">Tem certeza que deeseja enviar?</span>
-                                    <form className="fle flex-col justify-between">
+                                    <form className="fle flex-col justify-between" >
                                         <div className="mt-1 mb-6">
                                             <span className="font-extralight text-gray" htmlFor="campo">Você está enviando os créditos para:</span>
                                         </div>
