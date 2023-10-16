@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Layout from '../components/Layout';
 import { IconEdit } from '@tabler/icons-react';
 import { IconTrash } from '@tabler/icons-react';
@@ -8,21 +8,22 @@ import ImageTeste from "../components/icons/images/imagemFruta.png";
 
 
 const Produtos = () => {
-  const [foto, setFoto] = useState(null);
-  const [nome, setNome] = useState('')
-  const [descricao, setDescricao] = useState('')
-  const [tipo, setTipo] = useState('')
-  const [tempoPreparo, setTempoPreparo] = useState('')
-  const [preco, setPreco] = useState('')
+  const [name, setName] = useState('')
+  const [description, setDescription] = useState('')
+  const [price, setPrice] = useState(null)
+  const [photo, setPhoto] = useState(null);
+  const [productType, setProductType] = useState('')
+  const [options, setOptions] = useState([]);
+  const [preparationTime, setPreparationTime] = useState(null)
 
 
 
-  const [selected, setSelected] = useState(null);
-  const [buttonSelected, setButtonSelected] = useState(null);
+  const [disponibility, setDisponibility] = useState(null);
+  const [buttonSelected, setButtonSelected] = useState(false);
 
   const handleToggle = (value) => {
 
-    setSelected(value);
+    setDisponibility(value);
     setButtonSelected(value); // Set the buttonSelected state
   };
   // modal de cadastro open and close
@@ -47,50 +48,77 @@ const Produtos = () => {
     setIsOpenEdit(false);
   };
 
+  useEffect(() => {
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc0NTQ2MTksImV4cCI6MTY5NzQ2NDYxOX0.JsX0-ExBW1GfjKCHynqt5GeUdHg1SMLz8U1-Z4KPXYc';
+
+    fetch("http://10.107.144.27:3000/products/types", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data); // Aquí imprime la respuesta
+        setOptions(data); // Aquí establece las opciones con los datos recibidos
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar os Tipos:", error);
+      });
+  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     // Aqui você pode fazer algo com os dados do formulário, como enviá-los para o servidor
-    console.log('Dados do produto:', { foto, nome, descricao, tipo, preco, tempoPreparo, selected });
 
 
     /// descomentar
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc0NTQ2MTksImV4cCI6MTY5NzQ2NDYxOX0.JsX0-ExBW1GfjKCHynqt5GeUdHg1SMLz8U1-Z4KPXYc';
+
+    const data = {
+      photo,
+      name,
+      description,
+      productType,
+      price,
+      preparationTime,
+      disponibility
+    };
 
 
-    // const data = {
-    //   foto,
-    //   nome,
-    //   descricao,
-    //   tipo,
-    //   preco,
-    //   tempoPreparo,
-    // };
+    console.log('Dados do produto:', { data });
 
-    // fetch('URL_DO_SEU_ENDPOINT', {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/json',
-    //   },
-    //   body: JSON.stringify(data),
-    // })
-    //   .then((response) => response.json())
-    //   .then((responseData) => {
-    //     // Aqui você pode lidar com a resposta do servidor, se necessário
-    //     console.log('Resposta do servidor:', responseData);
-    //   })
-    //   .catch((error) => {
-    //     // Lidar com erros, se houver algum
-    //     console.error('Erro ao fazer a solicitação POST:', error);
-    //   });
+    fetch('http://10.107.144.27:3000/products', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
+      .then((response) => response.json())
+      .then((responseData) => {
+        // Aqui você pode lidar com a resposta do servidor, se necessário
+        console.log('Resposta do servidor: certo', responseData);
+      })
+      .catch((error) => {
+        // Lidar com erros, se houver algum
+        console.error('Erro ao fazer a solicitação POST:', error);
+      });
+
+    setIsOpen(false);
+
 
   };
+
 
   const handlePhotoChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setFoto(event.target.result);
+        setPhoto(event.target.result);
       };
       reader.readAsDataURL(file);
     }
@@ -207,9 +235,9 @@ const Produtos = () => {
                       }}
                       onClick={() => document.getElementById("hiddenFileInput").click()}
                     >
-                      {foto ? (
+                      {photo ? (
                         <img
-                          src={foto}
+                          src={photo}
                           alt="Selected"
                           style={{ width: "100%", height: "100%", objectFit: "cover" }}
                         />
@@ -238,7 +266,7 @@ const Produtos = () => {
                         placeholder="Nome do produto"
                         id="nome"
                         className="border rounded-lg border-gray p-2 mb-4 w-full"
-                        onChange={(e) => setNome(e.target.value)}
+                        onChange={(e) => setName(e.target.value)}
 
                       />
                     </div>
@@ -253,7 +281,7 @@ const Produtos = () => {
                         placeholder="Descrição do produto"
                         id="descricao"
                         className="h-11 border rounded-lg border-gray p-2 mb-4 w-full"
-                        onChange={(e) => setDescricao(e.target.value)}
+                        onChange={(e) => setDescription(e.target.value)}
                       />
                     </div>
                   </div>
@@ -264,31 +292,52 @@ const Produtos = () => {
                     <div className=''>
                       <label htmlFor="campo">Tipo do produto</label>
                       <div className="pt-1 ">
-                        <div class="relative inline-flex h-11 w-full">
-                          <select class="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10  py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm" onChange={(e) => setTipo(e.target.value)}>
-                            <option>Sim</option>
-                            <option>Não</option>
+                        <div className="relative inline-flex h-11 w-full">
+                          <select
+                            className="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10 py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm"
+                            onChange={(e) => setProductType(e.target.value)}
+                            value={productType}
+                          >
+                            <option value="">Selecione</option>
+                            {options.map((item) => (
+                              <option key={item.id} value={item.type}>
+                                {item.type}
+                              </option>
+                            ))}
                           </select>
-                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                              <path fillRule="evenodd" d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd"></path>
+                            </svg>
                           </div>
                         </div>
                       </div>
                     </div>
 
+
                     {/* Tempo de preparacao */}
                     <div className=''>
                       <label htmlFor="campo">Tempo de preparo</label>
                       <div className="pt-1 ">
-                        <div class="relative inline-flex h-11 w-full">
-                          <select class="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10  py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm" onChange={(e) => setTempoPreparo(e.target.value)}>
-                            <option>5</option>
-                            <option>10</option>
-                            <option>15</option>
-                            <option>20</option>
+                        <div className="relative inline-flex h-11 w-full">
+                          <select
+                            className="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10 py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm"
+                            onChange={(e) => {
+                              const value = e.target.value === "" ? null : parseInt(e.target.value);
+                              setPreparationTime(value);
+                            }}
+                            value={preparationTime || ""}
+                          >
+                            <option value="">Selecione</option>
+                            <option value="5">5 minutos</option>
+                            <option value="10">10 minutos</option>
+                            <option value="15">15 minutos</option>
+                            <option value="20">20 minutos</option>
                           </select>
-                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                              <path fillRule="evenodd" d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd"></path>
+                            </svg>
                           </div>
                         </div>
                       </div>
@@ -303,7 +352,7 @@ const Produtos = () => {
                           placeholder="Digite o preço"
                           id="preco"
                           className="border h-11 rounded-lg border-gray p-2 mb-4 w-full"
-                          onChange={(e) => setPreco(e.target.value)}
+                          onChange={(e) => setPrice(e.target.value)}
 
                         />
                       </div>
@@ -312,44 +361,44 @@ const Produtos = () => {
 
                   </div>
                   <div>
-      <span>Disponibilidade</span>
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          backgroundColor: buttonSelected === true ? '#FF6C44' : buttonSelected === false ? 'gray' : '#FF6C44',
-          width: 'max-content',
-          borderRadius: '50px',
-          gap: '2vw',
-        }}
-      >
-        <button
-          type="button"
-          onClick={() => handleToggle(false)}
-          className={buttonSelected === false ? 'selected' : ''}
-          style={{
-            backgroundColor: buttonSelected === false ? 'white' : 'transparent',
-            color: buttonSelected === false ? 'gray' : '#FF6C44',
-            borderRadius: '50%',
-            transition: 'background-color 0.5s',
-          }}
-        >
-          NÃO
-        </button>
-        <button
-          type="button"
-          onClick={() => handleToggle(true)}
-          className={buttonSelected === true ? 'selected' : ''}
-          style={{
-            backgroundColor: buttonSelected === true ? 'white' : 'transparent',
-            color: buttonSelected === false ? 'gray' : '#FF6C44', // Corrigido aqui
-            borderRadius: '50%',
-          }}
-        >
-          SIM
-        </button>
-      </div>
-    </div>
+                    <span>Disponibilidade</span>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        backgroundColor: buttonSelected === true ? '#FF6C44' : buttonSelected === false ? 'gray' : '#FF6C44',
+                        width: 'max-content',
+                        borderRadius: '50px',
+                        gap: '2vw',
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => handleToggle(false)}
+                        className={buttonSelected === false ? 'selected' : ''}
+                        style={{
+                          backgroundColor: buttonSelected === false ? 'white' : 'transparent',
+                          color: buttonSelected === false ? 'gray' : '#FF6C44',
+                          borderRadius: '50%',
+                          transition: 'background-color 0.5s',
+                        }}
+                      >
+                        NÃO
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleToggle(true)}
+                        className={buttonSelected === true ? 'selected' : ''}
+                        style={{
+                          backgroundColor: buttonSelected === true ? 'white' : 'transparent',
+                          color: buttonSelected === false ? 'gray' : '#FF6C44', // Corrigido aqui
+                          borderRadius: '50%',
+                        }}
+                      >
+                        SIM
+                      </button>
+                    </div>
+                  </div>
 
                   <div className="flex justify-end h-16 gap-4 ">
                     <button

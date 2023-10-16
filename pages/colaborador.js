@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import Layout from '../components/Layout'
 import Image from "next/image";
@@ -8,10 +8,12 @@ import TableColaborador from "../components/tablesProdutosColaboradores";
 
 
 export default function Colaborador() {
-  const [nomeColoborador, setNomeColoborador] = useState('')
+  const [name, setName] = useState('')
   const [email, setEmail] = useState('')
-  const [tipo, setTipo] = useState('')
+  const [password, setPassword] = useState('')
 
+  const [userType, setUserType] = useState('')
+  const [employeeData, setEmployeeData] = useState([])
 
 
   // Modal de cadastro open and close
@@ -24,7 +26,7 @@ export default function Colaborador() {
   const closeModal = () => {
     setIsOpen(false);
   };
-  
+
   // modal de edição open and close
   const [isOpenEdit, setIsOpenEdit] = useState(false);
 
@@ -39,11 +41,93 @@ export default function Colaborador() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aqui você pode fazer algo com os dados do formulário, como enviá-los para o servidor
-    console.log('Dados do produto:', { nomeColoborador,email,tipo });
 
+    let url;
+    if (userType === 'ADMIN') {
+      url = 'http://10.107.144.27:3000/auth/signup/customer';
+      console.log(url)
+      const data = {
+        name,
+        email,
+       userType,
+      password,
+      };
+      console.log('Dados do produto: antes do fetch', { data });
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          // Trate a resposta do servidor, se necessário
+          console.log('Resposta do servidor:', response);
+        })
+        .catch((error) => {
+          console.error('Erro ao enviar a solicitação:', error);
+        });
+      
+    } else if (userType === 'COLABORATOR') {
+      url = 'http://localhost:3000/auth/signup/colaborator';
+      console.log(url)
+      const data = {
+       name,
+        email,
+       userType,
+      password,
+      };
+      console.log('Dados do produto: antes do fetch', { data });
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      })
+        .then((response) => response.json())
+        .then((response) => {
+          // Trate a resposta do servidor, se necessário
+          console.log('Resposta do servidor:', response);
+        })
+        .catch((error) => {
+          console.error('Erro ao enviar a solicitação:', error);
+        });
+    } else {
+      console.log('Escolha um tipo válido');
+    }
+
+
+
+
+    // Aqui você pode fazer algo com os dados do formulário, como enviá-los para o servidor
 
   };
+
+
+
+  useEffect(() => {
+    fetch("http://10.107.144.27:3000/users", {
+      method: "GET",
+      headers: {
+        Accept: "application/json",
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        // Filtrar os usuários com userType 'COLABORATOR' ou 'ADMIN'
+        const filteredUsers = data.filter((user) => user.userType === 'COLABORATOR' || user.userType === 'ADMIN');
+
+        // Definir o estado com os dados filtrados
+        setEmployeeData(filteredUsers);
+      })
+      .catch((error) => {
+        console.error("Erro ao buscar os usuários:", error);
+      });
+  }, []);
+
+
   return (
     <>
       <Layout>
@@ -89,7 +173,29 @@ export default function Colaborador() {
                         </tr>
                       </thead>
                       <tbody>
-                        <tr className=" text-sm font-medium dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                        {employeeData.map((users) => (
+                          <tr className=" text-sm font-medium dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                              {users.id}
+                            </th>
+                            <td className="px-6 py-4 ">
+                              {users.name}
+                            </td>
+                            <td className="px-6 py-4">
+                              {users.email}
+                            </td>
+                            <td className="px-6 py-4">
+                              {users.userType}
+                            </td>
+                            <td className='flex px-6 py-4  gap-3 items-center justify-around'>
+                              <IconEdit onClick={openModalEdit} color='#979797' width={24} height={24} />
+                              <IconTrash color='#F15050' width={24} height={24} />
+                            </td>
+                          </tr>
+                        ))}
+
+
+                        {/* <tr className=" text-sm font-medium dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                           <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
                             1
                           </th>
@@ -106,7 +212,7 @@ export default function Colaborador() {
                             <IconEdit onClick={openModalEdit} color='#979797' width={24} height={24} />
                             <IconTrash color='#F15050' width={24} height={24} />
                           </td>
-                        </tr>
+                        </tr> */}
                       </tbody>
                     </table>
                   </div>
@@ -131,7 +237,7 @@ export default function Colaborador() {
                           placeholder="Nome do colaborador"
                           id="email"
                           className="border rounded-lg border-gray p-2 mb-4 w-full"
-                          onChange={(e) => setNomeColoborador(e.target.value)}
+                          onChange={(e) => setName(e.target.value)}
 
                         />
                       </div>
@@ -151,16 +257,30 @@ export default function Colaborador() {
                       </div>
                     </div>
 
+                    <div>
+                      <label className="" htmlFor="campo">Senha</label>
+                      <div className="pt-1">
+                        <input
+                          type="password"
+                          placeholder="Senha"
+                          id="email"
+                          className="border rounded-lg border-gray p-2 mb-4 w-full"
+                          onChange={(e) => setPassword(e.target.value)}
+
+                        />
+                      </div>
+                    </div>
+
                     <div className='mb-5'>
                       <label htmlFor="campo">Tipo do colaborador</label>
                       <div className="pt-1">
                         <div class="relative inline-flex h-11 w-2/5">
-                          <select class="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10  py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm" onChange={(e) => setTipo(e.target.value)}
->
-                            <option>Tipo 1</option>
-                            <option>Tipo 2</option>
-                            <option>Tipo 3</option>
-                            <option>Tipo 4</option>
+                          <select class="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10  py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm" onChange={(e) => setUserType(e.target.value)}
+                          >                           <option>Selecionar</option>
+
+                            <option>ADMIN</option>
+                            <option>COLABORATOR</option>
+
                           </select>
                           <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
                             <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
@@ -176,7 +296,7 @@ export default function Colaborador() {
                         Cancelar
                       </button>
                       <button
-                      onClick={handleSubmit}
+                        onClick={handleSubmit}
 
                         type="submit"
                         className="bg-primary border-text border h-11 text-white py-2 px-4 rounded">
