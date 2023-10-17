@@ -15,7 +15,7 @@ const Produtos = () => {
   const [productType, setProductType] = useState('')
   const [options, setOptions] = useState([]);
   const [preparationTime, setPreparationTime] = useState(null)
-
+const [products, setProducts] = useState([])
 
 
   const [disponibility, setDisponibility] = useState(null);
@@ -49,7 +49,7 @@ const Produtos = () => {
   };
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc0NTQ2MTksImV4cCI6MTY5NzQ2NDYxOX0.JsX0-ExBW1GfjKCHynqt5GeUdHg1SMLz8U1-Z4KPXYc';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc1NDIyNjEsImV4cCI6MTY5NzU1MjI2MX0.5hcCb9VRAcqjiDfPZ-oxBQmaCIg3yceWww3IrgO09gw';
 
     fetch("http://10.107.144.27:3000/products/types", {
       method: "GET",
@@ -74,7 +74,7 @@ const Produtos = () => {
 
 
     /// descomentar
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc0NTQ2MTksImV4cCI6MTY5NzQ2NDYxOX0.JsX0-ExBW1GfjKCHynqt5GeUdHg1SMLz8U1-Z4KPXYc';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc1NDIyNjEsImV4cCI6MTY5NzU1MjI2MX0.5hcCb9VRAcqjiDfPZ-oxBQmaCIg3yceWww3IrgO09gw';
 
     const data = {
       photo,
@@ -117,13 +117,29 @@ const Produtos = () => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = (event) => {
+      reader.onload = (event) => {  
         setPhoto(event.target.result);
       };
       reader.readAsDataURL(file);
     }
   };
 
+
+  // useEffect(() => {
+  //   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc1NDIyNjEsImV4cCI6MTY5NzU1MjI2MX0.5hcCb9VRAcqjiDfPZ-oxBQmaCIg3yceWww3IrgO09gw';
+
+  //   fetch("http://10.107.144.27:3000/products/", {
+  //     method: "GET",
+  //     headers: {
+  //       Accept: "application/json",
+  //       'Authorization': `Bearer ${token}`,
+
+  //     }, 
+  //   })
+  //   .then((response) => response.json)
+  //   .then((data) => { setPro})
+
+  // },[])
 
   return (
     <Layout>
