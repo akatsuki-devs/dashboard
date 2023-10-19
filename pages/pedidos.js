@@ -79,7 +79,7 @@ export default function Pedidos() {
             <div className="flex flex-col items-center justify-center rounded-lg shadow-shadow-button   w-80 h-80 bg-white ">
               {/* <CardProdutos email="matheus.siqueira100@gmail.com" products="coxinha"/> */}
               <div className="flex justify-center flex-col text-center text-text">
-                <span className="text-2xl ">Pedido</span>
+                <span className="text-1xl ">Pedido</span>
                 <span className="text-base">de</span>
                 <div className="flex items-center justify-center w-72">
                   <div className=" break-all">

@@ -12,3 +12,4 @@ export default MyApp
 
 
 // INICIAR O PROJETO - npm run dev 
+// npm install firebase
