@@ -28,7 +28,7 @@ const Produtos = () => {
     name: '',
     description: '',
     price: 0,
-    photo: '',
+    photo: null,
   });
   const handleToggle = (value) => {
 
@@ -48,6 +48,7 @@ const Produtos = () => {
     setIsOpenModalDelete(false)
     setIsOpen(false);
 
+
   }
 
   const openModalDelete = (productId) => {
@@ -56,10 +57,10 @@ const Produtos = () => {
     setIsOpenModalDelete(true);
   }
   const DeleteProductModal = (e) => {
-    e.preventDefault();
+
     console.log('deletar')
     console.log(productToDelete, 'id fetch')
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3MjIwMTUsImV4cCI6MTY5NzczMjAxNX0.lnp9uVKE_LJs1muZu8CsLHYu-Fs5j6RfyHUS37nYpkA';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3OTg5NjksImV4cCI6MTY5NzgwODk2OX0.9xeWbEc2go6rZG3SnB588n65nsSr38PqDm4zu4h-u5s';
 
     console.log(token)
 
@@ -71,34 +72,34 @@ const Produtos = () => {
       },
     })
       .then((response) => response.json())
-      .then((responseData) => {
-        // Lidar com a resposta do servidor, se necessário
-        console.log('Produto excluído com sucesso:', responseData);
-        useEffect(() => {
-          const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3MTE4MjMsImV4cCI6MTY5NzcyMTgyM30.feVXlLe7RxQJ5GZHVd1WlU9--dTC-iqRSIwni8xG8S4';
+      // .then((responseData) => {
+      //   // Lidar com a resposta do servidor, se necessário
+      //   console.log('Produto excluído com sucesso:', responseData);
+      //   useEffect(() => {
+      //     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3OTg5NjksImV4cCI6MTY5NzgwODk2OX0.9xeWbEc2go6rZG3SnB588n65nsSr38PqDm4zu4h-u5s';
 
-          fetch("http://10.107.144.27:3000/products/", {
-            method: "GET",
-            headers: {
-              Accept: "application/json",
-              'Authorization': `Bearer ${token}`,
-            },
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              setProducts(data);
-              console.log(data);
-            })
-            .catch((error) => {
-              console.error("Erro ao buscar os produtos:", error);
-            });
-        }, []);
-      })
+      //     fetch("http://10.107.144.27:3000/products/", {
+      //       method: "GET",
+      //       headers: {
+      //         Accept: "application/json",
+      //         'Authorization': `Bearer ${token}`,
+      //       },
+      //     })
+      //       .then((response) => response.json())
+      //       .then((data) => {
+      //         setProducts(data);
+      //         console.log(data);
+      //       })
+      //       .catch((error) => {
+      //         console.error("Erro ao buscar os produtos:", error);
+      //       });
+      //   }, []);
+      // })
       .catch((error) => {
         // Lidar com erros, se houver algum
         console.error('Erro ao excluir o produto:', error);
       });
-
+      window.location.reload()
     setIsOpenModalDelete(false);
   }
 
@@ -108,7 +109,7 @@ const Produtos = () => {
   
     // Verifique se productToEdit não é nulo antes de fazer o fetch
     if (productToEdit !== null) {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3MjIwMTUsImV4cCI6MTY5NzczMjAxNX0.lnp9uVKE_LJs1muZu8CsLHYu-Fs5j6RfyHUS37nYpkA';
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3OTg5NjksImV4cCI6MTY5NzgwODk2OX0.9xeWbEc2go6rZG3SnB588n65nsSr38PqDm4zu4h-u5s';
   
       fetch(`http://10.107.144.27:3000/products/${productToEdit}`, {
         method: 'GET',
@@ -143,6 +144,7 @@ const Produtos = () => {
   }, [productToEdit]);
   const closeModalEdit = () => {
     setIsOpenEdit(false);
+    
   };
 
   const EdiProductModal = (e) => {
@@ -150,14 +152,10 @@ const Produtos = () => {
     console.log('confirmar com id ',)
   }
 
-  // const openModalDelete = () => {
-  //   console.log('deletar ')
-  //   setIsOpenModalDelete(true)
-  // }
 
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3MjIwMTUsImV4cCI6MTY5NzczMjAxNX0.lnp9uVKE_LJs1muZu8CsLHYu-Fs5j6RfyHUS37nYpkA';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3OTg5NjksImV4cCI6MTY5NzgwODk2OX0.9xeWbEc2go6rZG3SnB588n65nsSr38PqDm4zu4h-u5s';
 
     fetch("http://10.107.144.27:3000/products/types", {
       method: "GET",
@@ -178,7 +176,7 @@ const Produtos = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3MjIwMTUsImV4cCI6MTY5NzczMjAxNX0.lnp9uVKE_LJs1muZu8CsLHYu-Fs5j6RfyHUS37nYpkA';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3OTg5NjksImV4cCI6MTY5NzgwODk2OX0.9xeWbEc2go6rZG3SnB588n65nsSr38PqDm4zu4h-u5s';
 
     const data = {
       photo,
@@ -210,6 +208,7 @@ const Produtos = () => {
         // Lidar com erros, se houver algum
         console.error('Erro ao fazer a solicitação POST:', error);
       });
+      window.location.reload()
 
     setIsOpen(false);
   };
@@ -226,7 +225,7 @@ const Produtos = () => {
 
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3MjIwMTUsImV4cCI6MTY5NzczMjAxNX0.lnp9uVKE_LJs1muZu8CsLHYu-Fs5j6RfyHUS37nYpkA';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3OTg5NjksImV4cCI6MTY5NzgwODk2OX0.9xeWbEc2go6rZG3SnB588n65nsSr38PqDm4zu4h-u5s';
 
     fetch("http://10.107.144.27:3000/products/", {
       method: "GET",
@@ -260,6 +259,22 @@ const Produtos = () => {
       ...formData,
       [fieldName]: '',
     });
+  };
+  const handleFileInputChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onload = (e) => {
+        setFormData({
+          ...formData,
+          photo: e.target.result,
+        });
+      };
+
+      reader.readAsDataURL(file);
+    }
   };
 
 
@@ -639,40 +654,44 @@ const Produtos = () => {
                 <form className="fle flex-col justify-between">
                   {/* foto */}
                   <div>
-                    <label className="" htmlFor="campo">
-                      Foto do produto
-                    </label>
-                    <div
-                      style={{
-                        height: "100px",
-                        width: "100px",
-                        borderRadius: "50%",
-                        border: "3px solid #EAEAEA",
-                        backgroundColor: "#F5F5F5",
-                        cursor: "pointer",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        overflow: "hidden",
-                      }}
-                    >
-                      <img
-                    src={formData.photo}
-                          alt="Selected"
-                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                        />
+      <label htmlFor="hiddenFileInput">
+        Foto do produto
+      </label>
+      <div
+        style={{
+          height: "100px",
+          width: "100px",
+          borderRadius: "50%",
+          border: "3px solid #EAEAEA",
+          backgroundColor: "#F5F5F5",
+          cursor: "pointer",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          overflow: "hidden",
+        }}
+        onClick={() => {
+          document.getElementById('hiddenFileInput').click();
+        }}
+      >
+        {formData.photo && (
+          <img
+            src={formData.photo}
+            alt="Selected"
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        )}
+      </div>
 
-                    </div>
-
-                    <input
-                      type="file"
-                      id="hiddenFileInput"
-                      accept="image/*"
-                      style={{ display: "none" }}
-                    // onChange={handlePhotoChange}
-                    />
-                    {/* Rest of your code... */}
-                  </div>
+      <input
+        type="file"
+        id="hiddenFileInput"
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={handleFileInputChange}
+      />
+      {/* Rest of your code... */}
+    </div>
 
                   {/* Nome */}
                   <div>
