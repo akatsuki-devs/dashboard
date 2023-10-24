@@ -5,13 +5,21 @@ import { IconTrash } from '@tabler/icons-react';
 import TableProdutos from "../components/tablesProdutosColaboradores";
 import Image from 'next/image';
 import ImageTeste from "../components/icons/images/imagemFruta.png";
+import {
+  getDownloadURL,
+  uploadBytes,
+  ref,
 
+} from 'firebase/storage'
+import { storage } from '../firebase';
 
 const Produtos = () => {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
-  const [price, setPrice] = useState(null)
+  const [price, setPrice] = useState(null);
+
   const [photo, setPhoto] = useState(null);
+  const [progress, setProgress] = useState(0)
   const [productType, setProductType] = useState('')
   const [options, setOptions] = useState([]);
   const [preparationTime, setPreparationTime] = useState(null)
@@ -29,6 +37,7 @@ const Produtos = () => {
     description: '',
     price: 0,
     photo: null,
+    productType: ''
   });
   const handleToggle = (value) => {
 
@@ -60,7 +69,7 @@ const Produtos = () => {
 
     console.log('deletar')
     console.log(productToDelete, 'id fetch')
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3OTg5NjksImV4cCI6MTY5NzgwODk2OX0.9xeWbEc2go6rZG3SnB588n65nsSr38PqDm4zu4h-u5s';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgxNDM3ODMsImV4cCI6MTY5ODE1Mzc4M30.AEZgpZ0FAu6PE9bv-lgpUsoFMPHiGZS1arP19zl_N7c';
 
     console.log(token)
 
@@ -99,18 +108,18 @@ const Produtos = () => {
         // Lidar com erros, se houver algum
         console.error('Erro ao excluir o produto:', error);
       });
-      window.location.reload()
+    window.location.reload()
     setIsOpenModalDelete(false);
   }
 
   // modal de edição open and close
   useEffect(() => {
     console.log(productToEdit, 'useState');
-  
+
     // Verifique se productToEdit não é nulo antes de fazer o fetch
     if (productToEdit !== null) {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3OTg5NjksImV4cCI6MTY5NzgwODk2OX0.9xeWbEc2go6rZG3SnB588n65nsSr38PqDm4zu4h-u5s';
-  
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgxNDM3ODMsImV4cCI6MTY5ODE1Mzc4M30.AEZgpZ0FAu6PE9bv-lgpUsoFMPHiGZS1arP19zl_N7c';
+
       fetch(`http://10.107.144.27:3000/products/${productToEdit}`, {
         method: 'GET',
         headers: {
@@ -118,16 +127,16 @@ const Produtos = () => {
           'Authorization': `Bearer ${token}`,
         },
       })
-      .then((response) => response.json())
-      .then((data) => {
-        console.log('Dados recebidos:', data);
-        // Aqui você pode fazer algo com os dados, se necessário.
-        setFormData(data);
-        
-      })
-      .catch((error) => {
-        console.error('Erro ao buscar os dados:', error);
-      });
+        .then((response) => response.json())
+        .then((data) => {
+          console.log('Dados recebidos:', data);
+          // Aqui você pode fazer algo com os dados, se necessário.
+          setFormData(data);
+
+        })
+        .catch((error) => {
+          console.error('Erro ao buscar os dados:', error);
+        });
     }
   }, [productToEdit]);
 
@@ -135,16 +144,16 @@ const Produtos = () => {
   const openModalEdit = (productId) => {
     console.log('Editar produto com ID:', productId);
     setProductToEdit(productId);
-    
+
     setIsOpenEdit(true);
   };
-  
+
   useEffect(() => {
     console.log(productToEdit, 'useState');
   }, [productToEdit]);
   const closeModalEdit = () => {
     setIsOpenEdit(false);
-    
+
   };
 
   const EdiProductModal = (e) => {
@@ -155,7 +164,7 @@ const Produtos = () => {
 
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3OTg5NjksImV4cCI6MTY5NzgwODk2OX0.9xeWbEc2go6rZG3SnB588n65nsSr38PqDm4zu4h-u5s';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgxNDM3ODMsImV4cCI6MTY5ODE1Mzc4M30.AEZgpZ0FAu6PE9bv-lgpUsoFMPHiGZS1arP19zl_N7c';
 
     fetch("http://10.107.144.27:3000/products/types", {
       method: "GET",
@@ -174,9 +183,9 @@ const Produtos = () => {
       });
   }, []);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3OTg5NjksImV4cCI6MTY5NzgwODk2OX0.9xeWbEc2go6rZG3SnB588n65nsSr38PqDm4zu4h-u5s';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgxNDM3ODMsImV4cCI6MTY5ODE1Mzc4M30.AEZgpZ0FAu6PE9bv-lgpUsoFMPHiGZS1arP19zl_N7c';
 
     const data = {
       photo,
@@ -208,24 +217,80 @@ const Produtos = () => {
         // Lidar com erros, se houver algum
         console.error('Erro ao fazer a solicitação POST:', error);
       });
-      window.location.reload()
+    window.location.reload()
 
     setIsOpen(false);
   };
-  const handlePhotoChange = (e) => {
+  // const storage = getStorage();
+  // const handlePhotoChange = (e) => {
+  //   const file = e.target.files[0];
+  //   console.log(file)
+  //   if (file) {
+  //     const reader = new FileReader();
+  //     reader.onload = async (event) => {
+  //       uploadImage(reader.result)
+  //     };
+  //     reader.readAsDataURL(file);
+  //     console.log(reader)
+  //   }
+  // };
+
+  const handlePhotoChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setPhoto(event.target.result);
-      };
-      reader.readAsDataURL(file);
+    if (!file) return;
+    const storageRef = ref(storage, `web/images-${file.name}`);
+    
+    try {
+      const snapshot = await uploadBytes(storageRef, file);
+  
+      // Track upload progress here
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log(`Upload is ${progress}% done`);
+  
+      // Upload complete, get the download URL
+      const url = await getDownloadURL(storageRef);
+      console.log('File available at', url);
+      // You can set the URL in your state or wherever needed
+    } catch (error) {
+      // Handle upload error
+      console.error(error);
     }
   };
+  
+  
+  
+  
+  
+  
+  // const uploadImage = async (uri) => {
+  //   const blob = Promise < Blob > ((resolve, reject) => {
+  //     const xhr = new XMLHttpRequest()
+  //     xhr.onload = function () {
+  //       resolve(xhr.response)
+  //     }
+  //     xhr.onerror = function (e) {
+  //       console.log(e);
+  //       reject(new TypeError('Network request failed'))
+  //     }
+  //     xhr.responseType = 'blob'
+  //     xhr.open('GET', uri, true)
+  //     xhr.send(null)
+  //   })
+
+  //   try {
+  //     const storageRef = ref(storage, `image-${Date.now()}`)
+  //     const result = await uploadBytes(storageRef, blob)
+  //     console.log(storageRef)
+  //     return await getDownloadURL(storageRef)
+  //   } catch (error) {
+  //     alert(`Error : ${error}`)
+  //   }
+  // };
+
 
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTc3OTg5NjksImV4cCI6MTY5NzgwODk2OX0.9xeWbEc2go6rZG3SnB588n65nsSr38PqDm4zu4h-u5s';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgxNDM3ODMsImV4cCI6MTY5ODE1Mzc4M30.AEZgpZ0FAu6PE9bv-lgpUsoFMPHiGZS1arP19zl_N7c';
 
     fetch("http://10.107.144.27:3000/products/", {
       method: "GET",
@@ -440,7 +505,7 @@ const Produtos = () => {
                 <form className="fle flex-col justify-between">
                   {/* foto */}
                   <div>
-                    <label className="" htmlFor="campo">
+                    <label className="" htmlFor="hiddenFileInput">
                       Foto do produto
                     </label>
                     <div
@@ -458,13 +523,13 @@ const Produtos = () => {
                       }}
                       onClick={() => document.getElementById("hiddenFileInput").click()}
                     >
-                      {photo ? (
+                      {photo && (
                         <img
                           src={photo}
                           alt="Selected"
                           style={{ width: "100%", height: "100%", objectFit: "cover" }}
                         />
-                      ) : null}
+                      )}
                     </div>
 
                     <input
@@ -572,7 +637,7 @@ const Produtos = () => {
                       <div className="pt-1">
                         <input
                           type="text"
-                          placeholder="Digite o preço"
+                          placeholder="0,00"
                           id="preco"
                           className="border h-11 rounded-lg border-gray p-2 mb-4 w-full"
                           onChange={(e) => setPrice(e.target.value)}
@@ -654,44 +719,44 @@ const Produtos = () => {
                 <form className="fle flex-col justify-between">
                   {/* foto */}
                   <div>
-      <label htmlFor="hiddenFileInput">
-        Foto do produto
-      </label>
-      <div
-        style={{
-          height: "100px",
-          width: "100px",
-          borderRadius: "50%",
-          border: "3px solid #EAEAEA",
-          backgroundColor: "#F5F5F5",
-          cursor: "pointer",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          overflow: "hidden",
-        }}
-        onClick={() => {
-          document.getElementById('hiddenFileInput').click();
-        }}
-      >
-        {formData.photo && (
-          <img
-            src={formData.photo}
-            alt="Selected"
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-          />
-        )}
-      </div>
+                    <label htmlFor="hiddenFileInput">
+                      Foto do produto
+                    </label>
+                    <div
+                      style={{
+                        height: "100px",
+                        width: "100px",
+                        borderRadius: "50%",
+                        border: "3px solid #EAEAEA",
+                        backgroundColor: "#F5F5F5",
+                        cursor: "pointer",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        overflow: "hidden",
+                      }}
+                      onClick={() => {
+                        document.getElementById('hiddenFileInput').click();
+                      }}
+                    >
+                      {formData.photo && (
+                        <img
+                          src={formData.photo}
+                          alt="Selected"
+                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                        />
+                      )}
+                    </div>
 
-      <input
-        type="file"
-        id="hiddenFileInput"
-        accept="image/*"
-        style={{ display: "none" }}
-        onChange={handleFileInputChange}
-      />
-      {/* Rest of your code... */}
-    </div>
+                    <input
+                      type="file"
+                      id="hiddenFileInput"
+                      accept="image/*"
+                      style={{ display: "none" }}
+                      onChange={handleFileInputChange}
+                    />
+                    {/* Rest of your code... */}
+                  </div>
 
                   {/* Nome */}
                   <div>
@@ -732,8 +797,8 @@ const Produtos = () => {
                       <div className="pt-1 ">
                         <div class="relative inline-flex h-11 w-full">
                           <select class="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10  py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm"
-                                  
-                                 
+
+
                           >
                             <option>Sim</option>
                             <option>Não</option>
@@ -757,6 +822,31 @@ const Produtos = () => {
                           value={formData.price}
                           onClick={() => handleClearField('price')} // Limpa o campo ao clicar
                         />
+                      </div>
+                    </div>
+                    <div className=''>
+                      <label htmlFor="campo">Tipo do produto</label>
+                      <div className="pt-1 ">
+                        <div className="relative inline-flex h-11 w-full">
+                          <select
+                            className="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10 py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm"
+                            onChange={(e) => setProductType(e.target.value)}
+                            value={productType}
+                          >
+                            <option value="">{formData.productType
+                            }</option>
+                            {options.map((item) => (
+                              <option key={item.id} value={item.type}>
+                                {item.type}
+                              </option>
+                            ))}
+                          </select>
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                              <path fillRule="evenodd" d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd"></path>
+                            </svg>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
