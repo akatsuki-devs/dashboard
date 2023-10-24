@@ -250,6 +250,7 @@ const Produtos = () => {
       // Upload complete, get the download URL
       const url = await getDownloadURL(storageRef);
       console.log('File available at', url);
+      setPhoto(url);
       // You can set the URL in your state or wherever needed
     } catch (error) {
       // Handle upload error
