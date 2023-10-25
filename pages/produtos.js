@@ -14,18 +14,27 @@ import {
 import { storage } from '../firebase';
 
 const Produtos = () => {
-  const [name, setName] = useState('')
+  const [name, setName] = useState('');
+  const [isNameVazio, setIsNameVazio] = useState(false);
+
   const [description, setDescription] = useState('')
+  const [isDescriptionVazio, setIsDescriptionVazio] = useState(false)
+
+  const [productType, setProductType] = useState('')
+  const [isproductTypeVazio, setIsProductTypeVazio] = useState(false)
+
   const [price, setPrice] = useState(null);
+  const [ispriceVazio, seIstPriceVazio] = useState(null);
 
   const [photo, setPhoto] = useState(null);
+  const [isphotoVazio, setIsPhotoVazio] = useState(false);
+
   const [progress, setProgress] = useState(0)
-  const [productType, setProductType] = useState('')
   const [options, setOptions] = useState([]);
   const [preparationTime, setPreparationTime] = useState(null)
   const [products, setProducts] = useState([])
   const [disponibility, setDisponibility] = useState(false);
-  const [buttonSelected, setButtonSelected] = useState(false);
+  const [buttonSelected, setButtonSelected] = useState(true);
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenEdit, setIsOpenEdit] = useState(false);
@@ -39,7 +48,7 @@ const Produtos = () => {
     photo: null,
     productType: '',
     disponibility: false,
-    preparationTime:null
+    preparationTime: null
   });
 
   const handleToggle = (value) => {
@@ -57,10 +66,18 @@ const Produtos = () => {
   const closeModal = (e) => {
     e.preventDefault();
     console.log('cancelar 1')
+    setName('');
+    setDescription('');
+    setProductType('');
+    setPrice(null);
+    setPhoto(null);
+    setPreparationTime(null);
+    setIsNameVazio(false);
+    setIsDescriptionVazio(false);
+    setIsProductTypeVazio(false);
+
     setIsOpenModalDelete(false)
     setIsOpen(false);
-
-
   }
 
   const openModalDelete = (productId) => {
@@ -196,10 +213,24 @@ const Produtos = () => {
       });
   }, []);
 
+  // tirar mensagem da VALIDAÇÃO
+  const handleChange = () => {
+    if (name.trim() !== '') {
+      setIsNameVazio(false);
+    }
+    if (description.trim() !== '') {
+      setIsDescriptionVazio(false);
+    }
+    if (productType.trim() !== '') {
+      setIsProductTypeVazio(false);
+    }
+
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgyMzA1MzEsImV4cCI6MTY5ODI0MDUzMX0.AVGbZ37ouvHfBpichhvQsPPoXJVusE-S8nkhVC4Is4s';
-  const preparationTimeValue = preparationTime === "" ? null : parseInt(preparationTime);
+    const preparationTimeValue = preparationTime === "" ? null : parseInt(preparationTime);
 
     const data = {
       photo,
@@ -210,6 +241,20 @@ const Produtos = () => {
       preparationTime,
       disponibility
     };
+
+    //VALIDAÇÃO
+    if (name.trim() === '') {
+      setIsNameVazio(true);
+      return; // Retorna para evitar o envio do formulário
+    }
+    if (description.trim() === '') {
+      setIsDescriptionVazio(true);
+      return; // Retorna para evitar o envio do formulário
+    }
+    if (productType.trim() === 'Selecione' || '') {
+      setIsProductTypeVazio(true);
+      return; // Retorna para evitar o envio do formulário
+    }
 
 
     console.log('Dados do produto:', { data });
@@ -231,7 +276,7 @@ const Produtos = () => {
         // Lidar com erros, se houver algum
         console.error('Erro ao fazer a solicitação POST:', error);
       });
-    window.location.reload()
+    // window.location.reload()
 
     setIsOpen(false);
   };
@@ -561,46 +606,55 @@ const Produtos = () => {
                   {/* fim Foto*/}
 
                   {/* Nome */}
-                  <div>
+                  <div className='mb-2'>
                     <label htmlFor="campo">Nome do produto</label>
                     <div className="pt-1">
                       <input
                         type="text"
                         placeholder="Nome do produto"
                         id="nome"
-                        className="border rounded-lg border-gray p-2 mb-4 w-full"
-                        onChange={(e) => setName(e.target.value)}
-
+                        className="border rounded-lg border-gray p-2  w-full"
+                        onChange={(e) => {
+                          setName(e.target.value);
+                          handleChange();
+                        }}
                       />
                     </div>
+                    {isNameVazio && <span style={{ color: 'red' }}>Por favor, preencha o nome</span>}
                   </div>
 
                   {/* Descrição */}
-                  <div>
+                  <div className='mb-2'>
                     <label htmlFor="campo">Descrição do produto</label>
                     <div className="pt-1">
                       <input
                         type="text"
                         placeholder="Descrição do produto"
                         id="descricao"
-                        className="h-11 border rounded-lg border-gray p-2 mb-4 w-full"
-                        onChange={(e) => setDescription(e.target.value)}
+                        className="h-11 border rounded-lg border-gray p-2 w-full"
+                        onChange={(e) => {
+                          setDescription(e.target.value)
+                          handleChange();
+                        }}
                       />
                     </div>
+                    {isDescriptionVazio && <span style={{ color: 'red' }}>Por favor, preencha a descrição</span>}
                   </div>
 
                   {/* Div do tipo e preço do produto */}
                   <div className='flex gap-8'>
                     {/* Tipo */}
-                    <div className=''>
+                    <div className='mb-2'>
                       <label htmlFor="campo">Tipo do produto</label>
                       <div className="pt-1 ">
                         <div className="relative inline-flex h-11 w-full">
                           <select
                             className="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10 py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm"
-                            onChange={(e) => setProductType(e.target.value)}
+                            onChange={(e) => {setProductType(e.target.value)
+                            handleChange();
+                            }}
                             value={productType}
-                          >
+                            >
                             <option value="">Selecione</option>
                             {options.map((item) => (
                               <option key={item.id} value={item.type}>
@@ -615,6 +669,7 @@ const Produtos = () => {
                           </div>
                         </div>
                       </div>
+                      {isproductTypeVazio && <span style={{ color: 'red' }}>Por favor, preencha a descrição</span>}
                     </div>
 
 
@@ -912,7 +967,7 @@ const Produtos = () => {
                         SIM
                       </button>
                     </div>
-                    </div>
+                  </div>
 
                   <div className="flex justify-end h-16 gap-4 ">
                     <button
