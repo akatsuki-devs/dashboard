@@ -24,7 +24,7 @@ const Produtos = () => {
   const [options, setOptions] = useState([]);
   const [preparationTime, setPreparationTime] = useState(null)
   const [products, setProducts] = useState([])
-  const [disponibility, setDisponibility] = useState(null);
+  const [disponibility, setDisponibility] = useState(false);
   const [buttonSelected, setButtonSelected] = useState(false);
   const [isOpenModalDelete, setIsOpenModalDelete] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
@@ -37,8 +37,11 @@ const Produtos = () => {
     description: '',
     price: 0,
     photo: null,
-    productType: ''
+    productType: '',
+    disponibility: false,
+    preparationTime:null
   });
+
   const handleToggle = (value) => {
 
     setDisponibility(value);
@@ -69,7 +72,7 @@ const Produtos = () => {
 
     console.log('deletar')
     console.log(productToDelete, 'id fetch')
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgxNDM3ODMsImV4cCI6MTY5ODE1Mzc4M30.AEZgpZ0FAu6PE9bv-lgpUsoFMPHiGZS1arP19zl_N7c';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgyMzA1MzEsImV4cCI6MTY5ODI0MDUzMX0.AVGbZ37ouvHfBpichhvQsPPoXJVusE-S8nkhVC4Is4s';
 
     console.log(token)
 
@@ -118,7 +121,7 @@ const Produtos = () => {
 
     // Verifique se productToEdit não é nulo antes de fazer o fetch
     if (productToEdit !== null) {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgxNDM3ODMsImV4cCI6MTY5ODE1Mzc4M30.AEZgpZ0FAu6PE9bv-lgpUsoFMPHiGZS1arP19zl_N7c';
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgyMzA1MzEsImV4cCI6MTY5ODI0MDUzMX0.AVGbZ37ouvHfBpichhvQsPPoXJVusE-S8nkhVC4Is4s';
 
       fetch(`http://10.107.144.27:3000/products/${productToEdit}`, {
         method: 'GET',
@@ -159,12 +162,22 @@ const Produtos = () => {
   const EdiProductModal = (e) => {
     e.preventDefault();
     console.log('confirmar com id ',)
+
+
+    // Implemente a lógica para determinar campos modificados e construir o objeto JSON para enviar com o PUT.
+    const updatedData = {};
+    for (const key in formData) {
+      if (formData[key] !== originalData[key]) {
+        updatedData[key] = formData[key];
+      }
+    }
+    console.log('Dados a serem enviados:', updatedData);
   }
 
 
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgxNDM3ODMsImV4cCI6MTY5ODE1Mzc4M30.AEZgpZ0FAu6PE9bv-lgpUsoFMPHiGZS1arP19zl_N7c';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgyMzA1MzEsImV4cCI6MTY5ODI0MDUzMX0.AVGbZ37ouvHfBpichhvQsPPoXJVusE-S8nkhVC4Is4s';
 
     fetch("http://10.107.144.27:3000/products/types", {
       method: "GET",
@@ -185,7 +198,8 @@ const Produtos = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgxNDM3ODMsImV4cCI6MTY5ODE1Mzc4M30.AEZgpZ0FAu6PE9bv-lgpUsoFMPHiGZS1arP19zl_N7c';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgyMzA1MzEsImV4cCI6MTY5ODI0MDUzMX0.AVGbZ37ouvHfBpichhvQsPPoXJVusE-S8nkhVC4Is4s';
+  const preparationTimeValue = preparationTime === "" ? null : parseInt(preparationTime);
 
     const data = {
       photo,
@@ -239,14 +253,14 @@ const Produtos = () => {
     const file = e.target.files[0];
     if (!file) return;
     const storageRef = ref(storage, `web/images-${file.name}`);
-    
+
     try {
       const snapshot = await uploadBytes(storageRef, file);
-  
+
       // Track upload progress here
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       console.log(`Upload is ${progress}% done`);
-  
+
       // Upload complete, get the download URL
       const url = await getDownloadURL(storageRef);
       console.log('File available at', url);
@@ -257,12 +271,12 @@ const Produtos = () => {
       console.error(error);
     }
   };
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
   // const uploadImage = async (uri) => {
   //   const blob = Promise < Blob > ((resolve, reject) => {
   //     const xhr = new XMLHttpRequest()
@@ -291,7 +305,7 @@ const Produtos = () => {
 
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgxNDM3ODMsImV4cCI6MTY5ODE1Mzc4M30.AEZgpZ0FAu6PE9bv-lgpUsoFMPHiGZS1arP19zl_N7c';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgyMzA1MzEsImV4cCI6MTY5ODI0MDUzMX0.AVGbZ37ouvHfBpichhvQsPPoXJVusE-S8nkhVC4Is4s';
 
     fetch("http://10.107.144.27:3000/products/", {
       method: "GET",
@@ -792,24 +806,31 @@ const Produtos = () => {
 
                   {/* Div do tipo e preço do produto */}
                   <div className='flex gap-8'>
-                    {/* Tipo */}
-                    <div className=''>
-                      <label htmlFor="campo">Tipo do produto</label>
-                      <div className="pt-1 ">
-                        <div class="relative inline-flex h-11 w-full">
-                          <select class="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10  py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm"
 
+                    <div className=''>
+                      <label htmlFor="campo">Tempo de preparo</label>
+                      <div className="pt-1 ">
+                        <div className="relative inline-flex h-11 w-full">
+                          <select
+                            className="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10 py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm"
 
                           >
-                            <option>Sim</option>
-                            <option>Não</option>
+                            <option value="">Selecione</option>
+                            <option value="5">5 minutos</option>
+                            <option value="10">10 minutos</option>
+                            <option value="15">15 minutos</option>
+                            <option value="20">20 minutos</option>
                           </select>
-                          <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
-                            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                          <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                            <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                              <path fillRule="evenodd" d="M6.293 7.293a1 1 0 011.414 0L10 9.586l2.293-2.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" clipRule="evenodd"></path>
+                            </svg>
                           </div>
                         </div>
                       </div>
                     </div>
+                    {/* Tipo */}
+
 
                     {/* Preço */}
                     <div className=''>
@@ -853,7 +874,45 @@ const Produtos = () => {
 
 
                   </div>
-
+                  <div className=''>
+                    <span>Disponibilidade</span>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        backgroundColor: buttonSelected === true ? '#FF6C44' : buttonSelected === false ? 'gray' : '#FF6C44',
+                        width: 'max-content',
+                        borderRadius: '50px',
+                        gap: '2vw',
+                      }}
+                    >
+                      <button
+                        type="button"
+                        onClick={() => handleToggle(false)}
+                        className={buttonSelected === false ? 'selected' : ''}
+                        style={{
+                          backgroundColor: buttonSelected === false ? 'white' : 'transparent',
+                          color: buttonSelected === false ? 'gray' : '#FF6C44',
+                          borderRadius: '50%',
+                          transition: 'background-color 0.5s',
+                        }}
+                      >
+                        NÃO
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleToggle(true)}
+                        className={buttonSelected === true ? 'selected' : ''}
+                        style={{
+                          backgroundColor: buttonSelected === true ? 'white' : 'transparent',
+                          color: buttonSelected === false ? 'gray' : '#FF6C44', // Corrigido aqui
+                          borderRadius: '50%',
+                        }}
+                      >
+                        SIM
+                      </button>
+                    </div>
+                    </div>
 
                   <div className="flex justify-end h-16 gap-4 ">
                     <button
