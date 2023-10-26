@@ -9,10 +9,17 @@ import TableColaborador from "../components/tablesProdutosColaboradores";
 
 export default function Colaborador() {
   const [name, setName] = useState('')
+  const [isNameVazio, setIsNameVazio] = useState(false)
+
   const [email, setEmail] = useState('')
+  const [isEmailVazio, setIsEmailVazio] = useState(false)
+
   const [password, setPassword] = useState('')
+  const [isPasswordVazio, setIsPasswordVazio] = useState(false)
 
   const [userType, setUserType] = useState('')
+  const [isUserTypeVazio, setIsUserTypeVazio] = useState(false)
+
   const [employeeData, setEmployeeData] = useState([])
 
 
@@ -23,7 +30,18 @@ export default function Colaborador() {
     setIsOpen(true);
   };
 
-  const closeModal = () => {
+  const closeModal = (e) => {
+    e.preventDefault();
+
+    // setName('');
+    // setEmail('');
+    // setPassword('');
+    // setUserType('');
+    // setIsNameVazio(false);
+    // setIsEmailVazio(false);
+    // setIsPasswordVazio(false);
+    // setIsUserTypeVazio(false);
+
     setIsOpen(false);
   };
 
@@ -39,19 +57,56 @@ export default function Colaborador() {
   };
 
 
+  // tirar mensagem da VALIDAÇÃO
+  const handleChange = () => {
+    if (name.trim !== '') {
+      setIsNameVazio(false);
+    }
+    if (email.trim() !== '') {
+      setIsEmailVazio(false);
+    }
+    if (password.trim() !== '') {
+      setIsPasswordVazio(false);
+    }
+    if (userType.trim() !== null) {
+      setIsUserTypeVazio(false);
+    }
+
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+      //VALIDAÇÃO
+      if (name.trim() === '') {
+        setIsNameVazio(true);
+        return; // Retorna para evitar o envio do formulário
+      }
+      if (email.trim() === '') {
+        setIsEmailVazio(true);
+        return; // Retorna para evitar o envio do formulário
+      }
+      if (password.trim() === '') {
+        setIsPasswordVazio(true);
+        return; // Retorna para evitar o envio do formulário
+      }
+      if (userType.trim() === '') {
+        setIsUserTypeVazio(true);
+        return; // Retorna para evitar o envio do formulário
+      }
+
 
     let url;
     if (userType === 'ADMIN') {
-      url = 'http://10.107.144.27:3000/auth/signup/customer';
+      url = 'http://10.107.144.27:3000/auth/signup/admin';
       console.log(url)
       const data = {
         name,
         email,
-       userType,
-      password,
+        userType,
+        password,
       };
+
+
       console.log('Dados do produto: antes do fetch', { data });
       fetch(url, {
         method: 'POST',
@@ -68,15 +123,15 @@ export default function Colaborador() {
         .catch((error) => {
           console.error('Erro ao enviar a solicitação:', error);
         });
-      
+
     } else if (userType === 'COLABORATOR') {
       url = 'http://localhost:3000/auth/signup/colaborator';
       console.log(url)
       const data = {
-       name,
+        name,
         email,
-       userType,
-      password,
+        userType,
+        password,
       };
       console.log('Dados do produto: antes do fetch', { data });
       fetch(url, {
@@ -229,53 +284,70 @@ export default function Colaborador() {
                 <div className=" modal-content  p-4 rounded-xl">
                   <h2 className="text-xl font-bold my-4">Cadastrar novo colaborador</h2>
                   <form className="fle flex-col justify-between">
-                    <div>
+                    <div className='mb-2'>
                       <label className="" htmlFor="campo">Nome do colaborador</label>
                       <div className="pt-1">
                         <input
                           type="text"
                           placeholder="Nome do colaborador"
                           id="email"
-                          className="border rounded-lg border-gray p-2 mb-4 w-full"
-                          onChange={(e) => setName(e.target.value)}
+                          className="border rounded-lg border-gray p-2  w-full"
+                          onChange={(e) => {
+                            setName(e.target.value);
+                            handleChange();
+                          }}
 
                         />
                       </div>
+                      {isNameVazio && <span style={{ color: 'red' }}>Por favor, preencha o nome do colaborador</span>}
                     </div>
 
-                    <div>
+                    <div className='mb-2'>
                       <label htmlFor="campo">Email do colaborador</label>
                       <div className="pt-1">
                         <input
                           type="text"
                           placeholder="Email do colaborador"
                           id="dinheiro"
-                          className="border rounded-lg border-gray p-2 mb-4 w-full"
-                          onChange={(e) => setEmail(e.target.value)}
+                          className="border rounded-lg border-gray p-2  w-full"
+                          onChange={(e) => {
+                            setEmail(e.target.value)
+                            handleChange();
+                          }}
 
                         />
                       </div>
+                      {isEmailVazio && <span style={{ color: 'red' }}>Por favor, preencha o email do colaborador</span>}
                     </div>
 
-                    <div>
+                    <div className='mb-2'>
                       <label className="" htmlFor="campo">Senha</label>
                       <div className="pt-1">
                         <input
                           type="password"
                           placeholder="Senha"
                           id="email"
-                          className="border rounded-lg border-gray p-2 mb-4 w-full"
-                          onChange={(e) => setPassword(e.target.value)}
+                          className="border rounded-lg border-gray p-2 w-full"
+                          onChange={(e) => {
+                            setPassword(e.target.value)
+                            handleChange();
+                          }}
 
                         />
                       </div>
+                      {isPasswordVazio && <span style={{ color: 'red' }}>Por favor, preencha a senha do colaborador</span>}
                     </div>
 
-                    <div className='mb-5'>
+                    <div className='mb-2'>
                       <label htmlFor="campo">Tipo do colaborador</label>
                       <div className="pt-1">
                         <div class="relative inline-flex h-11 w-2/5">
-                          <select class="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10  py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm" onChange={(e) => setUserType(e.target.value)}
+                          <select class="appearance-none bg-white border border-gray rounded-md min-w-full pl-3 pr-10  py-2 focus:outline-none focus:ring focus:border-blue-500 sm:text-sm"
+                            onChange={(e) => {
+                              setUserType(e.target.value)
+                              handleChange();
+                            }}
+                            value={userType}
                           >                           <option>Selecionar</option>
 
                             <option>ADMIN</option>
@@ -287,6 +359,7 @@ export default function Colaborador() {
                           </div>
                         </div>
                       </div>
+                      {isUserTypeVazio && <span style={{ color: 'red' }}>Por favor, preencha o tipo do colaborador</span>}
                     </div>
 
                     <div className="flex justify-end h-16 gap-4 ">

@@ -24,10 +24,10 @@ const Produtos = () => {
   const [isproductTypeVazio, setIsProductTypeVazio] = useState(false)
 
   const [price, setPrice] = useState(null);
-  const [ispriceVazio, seIstPriceVazio] = useState(null);
+  const [ispriceVazio, setIsPriceVazio] = useState(null);
 
   const [photo, setPhoto] = useState(null);
-  const [isphotoVazio, setIsPhotoVazio] = useState(false);
+  const [isPhotoVazio, setIsPhotoVazio] = useState(false);
 
   const [progress, setProgress] = useState(0)
   const [options, setOptions] = useState([]);
@@ -69,12 +69,13 @@ const Produtos = () => {
     setName('');
     setDescription('');
     setProductType('');
-    setPrice(null);
+    setPrice('');
     setPhoto(null);
     setPreparationTime(null);
-    setIsNameVazio(false);
+    setIsNameVazio('');
     setIsDescriptionVazio(false);
     setIsProductTypeVazio(false);
+    setIsPriceVazio(false);
 
     setIsOpenModalDelete(false)
     setIsOpen(false);
@@ -89,7 +90,7 @@ const Produtos = () => {
 
     console.log('deletar')
     console.log(productToDelete, 'id fetch')
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgyMzA1MzEsImV4cCI6MTY5ODI0MDUzMX0.AVGbZ37ouvHfBpichhvQsPPoXJVusE-S8nkhVC4Is4s';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgzMTgzMTYsImV4cCI6MTY5ODMyODMxNn0.JmC1-khFK94uuhOLR6PKKUEPG_3hqQUhZwpSI7Natzk';
 
     console.log(token)
 
@@ -138,7 +139,7 @@ const Produtos = () => {
 
     // Verifique se productToEdit não é nulo antes de fazer o fetch
     if (productToEdit !== null) {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgyMzA1MzEsImV4cCI6MTY5ODI0MDUzMX0.AVGbZ37ouvHfBpichhvQsPPoXJVusE-S8nkhVC4Is4s';
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgzMTgzMTYsImV4cCI6MTY5ODMyODMxNn0.JmC1-khFK94uuhOLR6PKKUEPG_3hqQUhZwpSI7Natzk';
 
       fetch(`http://10.107.144.27:3000/products/${productToEdit}`, {
         method: 'GET',
@@ -194,7 +195,7 @@ const Produtos = () => {
 
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgyMzA1MzEsImV4cCI6MTY5ODI0MDUzMX0.AVGbZ37ouvHfBpichhvQsPPoXJVusE-S8nkhVC4Is4s';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgzMTgzMTYsImV4cCI6MTY5ODMyODMxNn0.JmC1-khFK94uuhOLR6PKKUEPG_3hqQUhZwpSI7Natzk';
 
     fetch("http://10.107.144.27:3000/products/types", {
       method: "GET",
@@ -215,21 +216,27 @@ const Produtos = () => {
 
   // tirar mensagem da VALIDAÇÃO
   const handleChange = () => {
-    if (name.trim() !== '') {
+    if (name.trim !== '') {
       setIsNameVazio(false);
     }
     if (description.trim() !== '') {
       setIsDescriptionVazio(false);
     }
-    if (productType.trim() !== '') {
+    if (productType.trim() !== null) {
       setIsProductTypeVazio(false);
+    }
+    if (price !== null) {
+      setIsPriceVazio(false);
+    }
+    if (photo !== null) {
+      setIsPhotoVazio(false);
     }
 
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgyMzA1MzEsImV4cCI6MTY5ODI0MDUzMX0.AVGbZ37ouvHfBpichhvQsPPoXJVusE-S8nkhVC4Is4s';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgzMTgzMTYsImV4cCI6MTY5ODMyODMxNn0.JmC1-khFK94uuhOLR6PKKUEPG_3hqQUhZwpSI7Natzk';
     const preparationTimeValue = preparationTime === "" ? null : parseInt(preparationTime);
 
     const data = {
@@ -251,8 +258,16 @@ const Produtos = () => {
       setIsDescriptionVazio(true);
       return; // Retorna para evitar o envio do formulário
     }
-    if (productType.trim() === 'Selecione' || '') {
+    if (productType.trim() === '') {
       setIsProductTypeVazio(true);
+      return; // Retorna para evitar o envio do formulário
+    }
+    if (price === null ) {
+      setIsPriceVazio(true);
+      return; // Retorna para evitar o envio do formulário
+    }
+    if (photo === null ) {
+      setIsPhotoVazio(true);
       return; // Retorna para evitar o envio do formulário
     }
 
@@ -276,7 +291,7 @@ const Produtos = () => {
         // Lidar com erros, se houver algum
         console.error('Erro ao fazer a solicitação POST:', error);
       });
-    // window.location.reload()
+    window.location.reload()
 
     setIsOpen(false);
   };
@@ -350,7 +365,7 @@ const Produtos = () => {
 
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgyMzA1MzEsImV4cCI6MTY5ODI0MDUzMX0.AVGbZ37ouvHfBpichhvQsPPoXJVusE-S8nkhVC4Is4s';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgzMTgzMTYsImV4cCI6MTY5ODMyODMxNn0.JmC1-khFK94uuhOLR6PKKUEPG_3hqQUhZwpSI7Natzk';
 
     fetch("http://10.107.144.27:3000/products/", {
       method: "GET",
@@ -553,7 +568,7 @@ const Produtos = () => {
               </div>
             </div>
           </div>
-          {/* <TableProdutos Type="tableProdutos" /> */}
+          
         </div>
 
         {/* Modal de cadastro */}
@@ -582,14 +597,17 @@ const Produtos = () => {
                         overflow: "hidden",
                       }}
                       onClick={() => document.getElementById("hiddenFileInput").click()}
+                      
                     >
                       {photo && (
                         <img
                           src={photo}
                           alt="Selected"
                           style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                          
                         />
-                      )}
+                        )}
+                        
                     </div>
 
                     <input
@@ -669,7 +687,7 @@ const Produtos = () => {
                           </div>
                         </div>
                       </div>
-                      {isproductTypeVazio && <span style={{ color: 'red' }}>Por favor, preencha a descrição</span>}
+                      {isproductTypeVazio && <span style={{ color: 'red' }}>Por favor, preencha o tipo de produto</span>}
                     </div>
 
 
@@ -683,6 +701,7 @@ const Produtos = () => {
                             onChange={(e) => {
                               const value = e.target.value === "" ? null : parseInt(e.target.value);
                               setPreparationTime(value);
+                              
                             }}
                             value={preparationTime || ""}
                           >
@@ -699,6 +718,7 @@ const Produtos = () => {
                           </div>
                         </div>
                       </div>
+                      
                     </div>
 
                     {/* Preço */}
@@ -710,10 +730,13 @@ const Produtos = () => {
                           placeholder="0,00"
                           id="preco"
                           className="border h-11 rounded-lg border-gray p-2 mb-4 w-full"
-                          onChange={(e) => setPrice(e.target.value)}
+                          onChange={(e) => {setPrice(e.target.value)
+                          handleChange();
+                          }}
 
                         />
                       </div>
+                      {ispriceVazio && <span style={{ color: 'red' }}>Por favor, preencha o preço</span>}
                     </div>
 
 

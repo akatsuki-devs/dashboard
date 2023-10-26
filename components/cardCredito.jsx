@@ -27,15 +27,45 @@ const CardCreditos = (props) => {
 
     // estados dos inputs
     const [email, setEmail] = useState('');
+    const [emailValido, setEmailValido] = useState(true); // Adicionando estado para verificar a validade do e-mail
+
     const [value, setValue] = useState('');
+    const [valorValido, setValorValido] = useState(true);
 
     const handleEmailChange = (event) => {
-        setEmail(event.target.value);
+        const inputValue = event.target.value;
+        setEmail(inputValue);
+
+        // Validando o e-mail
+        const emailCorreto = /\S+@\S+\.\S+/;
+        const emailValido = emailCorreto.test(inputValue);
+        setEmailValido(emailValido);
     };
 
     const handleCreditosChange = (event) => {
-        setValue(event.target.value);
+        const inputValue = event.target.value;
+
+        //valida se esta sendo digitado numeros ou não
+
+        if (/^\d*$/.test(inputValue)) { // Alteramos a expressão regular para permitir uma string vazia ou números
+            setValue(inputValue);
+        } else {
+            event.preventDefault();
+        }
     };
+
+
+
+    // function validateEmail(email) {
+    //     var emailCorreto = /\S+@\S+\.\S+/;
+    //     return emailCorreto.test(email);
+    // }
+
+    // console.log(validateEmail('texto@texto.com')); // true
+    // console.log(validateEmail('texto@texto')); // false
+    // console.log(validateEmail('texto.com')); // false
+    // console.log(validateEmail('texto')); // false
+    // console.log(validateEmail('texto@gmail.com')); // true
 
 
     // POST DE CRÉDITO
@@ -150,7 +180,7 @@ const CardCreditos = (props) => {
                                 <div className=" modal-content  p-4 rounded-xl">
                                     <h2 className="text-xl font-bold my-4">Adicionar créditos para usuários</h2>
                                     <form className="fle flex-col justify-between">
-                                        <div>
+                                        <div className="mb-2">
                                             <label className="" htmlFor="campo">Email do usuário</label>
                                             <div className="pt-1">
                                                 <input
@@ -158,12 +188,14 @@ const CardCreditos = (props) => {
                                                     placeholder="Email"
                                                     id="email"
                                                     onChange={handleEmailChange}
-                                                    className="border rounded-lg border-gray p-2 mb-4 w-full"
+                                                    className={`border rounded-lg border-gray p-2 mb-1 w-full ${!emailValido ? 'border-red-500' : '' // Adicionando uma classe de borda vermelha se o e-mail for inválido
+                                                        }`}
                                                 />
                                             </div>
+                                            {!emailValido && <p className="text-red text-sm">Por favor, insira um e-mail válido.</p>} {/* Exibindo a mensagem de erro */}
                                         </div>
 
-                                        <div>
+                                        <div className="mb-2">
                                             <label htmlFor="campo">Quanto deseja enviar?</label>
                                             <div className="pt-1">
                                                 <input
@@ -171,9 +203,12 @@ const CardCreditos = (props) => {
                                                     placeholder="R$"
                                                     id="dinheiro"
                                                     onChange={handleCreditosChange}
-                                                    className="border rounded-lg border-gray p-2 mb-4 w-full"
+                                                    value={value}
+                                                    className={`border rounded-lg border-gray p-2 mb-1 w-full ${!valorValido ? 'border-red-500' : ''
+                                                        }`}
                                                 />
                                             </div>
+                                            {!valorValido && <p className="text-red text-sm">Por favor, insira apenas números.</p>}
                                         </div>
 
                                     </form>
@@ -217,7 +252,7 @@ const CardCreditos = (props) => {
                                                 </div>
                                                 <div>
                                                     <span>
-                                                        matheus.siqueira100@gmail.com
+                                                        {email}
                                                     </span>
                                                 </div>
                                             </div>
@@ -227,7 +262,7 @@ const CardCreditos = (props) => {
                                                     <span> Créditos:</span>
                                                 </div>
                                                 <div>
-                                                    R$ <span>100,00</span>
+                                                    R$ <span>{value}</span>
                                                 </div>
                                             </div>
 
@@ -235,7 +270,7 @@ const CardCreditos = (props) => {
 
                                         <div className="flex justify-center h-16 gap-4 ">
                                             <button
-                                                onClick={closeModal}
+                                                onClick={closeModalEdit}
                                                 className="border text-text h-11 py-2 px-14 rounded ">
                                                 Cancelar
                                             </button>
