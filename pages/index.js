@@ -88,7 +88,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </Layout>;
+      </Layout>
     </>
   );
 };

@@ -90,7 +90,7 @@ const Produtos = () => {
 
     console.log('deletar')
     console.log(productToDelete, 'id fetch')
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgzMTgzMTYsImV4cCI6MTY5ODMyODMxNn0.JmC1-khFK94uuhOLR6PKKUEPG_3hqQUhZwpSI7Natzk';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg0MDQxMDAsImV4cCI6MTY5ODQxNDEwMH0.pOeFy-D_QKVFVG-QaO4V3dg6I5MoVpMcWkJQRqkRdqY';
 
     console.log(token)
 
@@ -139,7 +139,7 @@ const Produtos = () => {
 
     // Verifique se productToEdit não é nulo antes de fazer o fetch
     if (productToEdit !== null) {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgzMTgzMTYsImV4cCI6MTY5ODMyODMxNn0.JmC1-khFK94uuhOLR6PKKUEPG_3hqQUhZwpSI7Natzk';
+      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg0MDQxMDAsImV4cCI6MTY5ODQxNDEwMH0.pOeFy-D_QKVFVG-QaO4V3dg6I5MoVpMcWkJQRqkRdqY';
 
       fetch(`http://10.107.144.27:3000/products/${productToEdit}`, {
         method: 'GET',
@@ -195,7 +195,7 @@ const Produtos = () => {
 
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgzMTgzMTYsImV4cCI6MTY5ODMyODMxNn0.JmC1-khFK94uuhOLR6PKKUEPG_3hqQUhZwpSI7Natzk';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg0MDQxMDAsImV4cCI6MTY5ODQxNDEwMH0.pOeFy-D_QKVFVG-QaO4V3dg6I5MoVpMcWkJQRqkRdqY';
 
     fetch("http://10.107.144.27:3000/products/types", {
       method: "GET",
@@ -236,7 +236,7 @@ const Produtos = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgzMTgzMTYsImV4cCI6MTY5ODMyODMxNn0.JmC1-khFK94uuhOLR6PKKUEPG_3hqQUhZwpSI7Natzk';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg0MDQxMDAsImV4cCI6MTY5ODQxNDEwMH0.pOeFy-D_QKVFVG-QaO4V3dg6I5MoVpMcWkJQRqkRdqY';
     const preparationTimeValue = preparationTime === "" ? null : parseInt(preparationTime);
 
     const data = {
@@ -365,7 +365,7 @@ const Produtos = () => {
 
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTgzMTgzMTYsImV4cCI6MTY5ODMyODMxNn0.JmC1-khFK94uuhOLR6PKKUEPG_3hqQUhZwpSI7Natzk';
+    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg0MDQxMDAsImV4cCI6MTY5ODQxNDEwMH0.pOeFy-D_QKVFVG-QaO4V3dg6I5MoVpMcWkJQRqkRdqY';
 
     fetch("http://10.107.144.27:3000/products/", {
       method: "GET",
@@ -437,7 +437,7 @@ const Produtos = () => {
                 <div class=" w-full h-4/5 relative overflow-x-auto shadow-md sm:rounded-lg">
                   <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400 ">
                     <thead className="overflow-auto text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                      <tr className='sticky top-0 bg-primary text-white'>
+                      <tr className='sticky top-0 z-10 bg-primary text-white'>
                         <th scope="col" className=" px-6 py-3">
                           Foto
                         </th>
