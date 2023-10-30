@@ -97,7 +97,7 @@ export default function Colaborador() {
 
     let url;
     if (userType === 'ADMIN') {
-      url = 'http://10.107.144.27:3000/auth/signup/admin';
+      url = 'http://10.107.144.14:3000/auth/signup/admin';
       console.log(url)
       const data = {
         name,
@@ -163,7 +163,7 @@ export default function Colaborador() {
 
 
   useEffect(() => {
-    fetch("http://10.107.144.27:3000/users", {
+    fetch("http://10.107.144.14:3000/users", {
       method: "GET",
       headers: {
         Accept: "application/json",

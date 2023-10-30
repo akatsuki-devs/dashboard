@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import Image from "next/image";
+import NumberFormat from "react-number-format";
 
 const CardCreditos = (props) => {
     // modal de adicionar credito open and close
@@ -32,6 +33,8 @@ const CardCreditos = (props) => {
     const [value, setValue] = useState('');
     const [valorValido, setValorValido] = useState(true);
 
+
+
     const handleEmailChange = (event) => {
         const inputValue = event.target.value;
         setEmail(inputValue);
@@ -42,7 +45,10 @@ const CardCreditos = (props) => {
         setEmailValido(emailValido);
     };
 
+
     const handleCreditosChange = (event) => {
+        // var valorFormatado = valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+
         const inputValue = event.target.value;
 
         //valida se esta sendo digitado numeros ou não
@@ -204,6 +210,8 @@ const CardCreditos = (props) => {
                                                     id="dinheiro"
                                                     onChange={handleCreditosChange}
                                                     value={value}
+                                                    // keyboardType="numeric"
+                                                    // maxLength={6}
                                                     className={`border rounded-lg border-gray p-2 mb-1 w-full ${!valorValido ? 'border-red-500' : ''
                                                         }`}
                                                 />
