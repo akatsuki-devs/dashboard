@@ -9,9 +9,12 @@ import WebSocketClient from "./WebSocketClient"; // Importe a classe WebSocketCl
 export default function QrCode() {
 
   const [scanResult, setScanResult] = useState(null);
-
+  const [idFromWebSocket, setIdFromWebSocket] = useState(null);
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg2NjIzNDEsImV4cCI6MTY5ODY3MjM0MX0.IeC1Th05ia3DVy5bfiL-yDw9FgSqnpIs0y-Bjg_09ns';
   useEffect(() => {
-    const webSocketClient = new WebSocketClient(); // Inicialize a instância do WebSocketClient aqui
+    const webSocketClient = new WebSocketClient('ws://localhost:9000/easy'); // URL do WebSocket
+
+
 
     const scanner = new Html5QrcodeScanner('reader', {
       qrbox: {
@@ -21,7 +24,9 @@ export default function QrCode() {
       fps: 5,
     });
 
-    scanner.render(success, error);
+    scanner.render(success, 
+     // error
+      );
 
     function success(result) {
       scanner.clear();
@@ -31,20 +36,53 @@ export default function QrCode() {
       const data = {
         qrCodeData: result,
       };
-
       const jsonStr = JSON.stringify(data);
-
       console.log(jsonStr);
 
       // Envie os dados para o servidor WebSocket
       webSocketClient.sendQRCodeData(jsonStr); // Enviar os dados usando a instância do WebSocketClient
+    
     }
+    // function error(err) {
+    //   console.warn(err);
+    // }
 
-    function error(err) {
-      console.warn(err);
-    }
-  
+
+    
   }, []);
+
+
+  // useEffect(() => {
+  //   webSocketClient.addMessageHandler((data) => {
+  //     const parsedData = JSON.parse(data);
+  //     const { qrCodeData } = parsedData;
+
+  //     const numberQrCodeData = !isNaN(qrCodeData) ? Number(qrCodeData) : qrCodeData;
+
+  //     setIdFromWebSocket(numberQrCodeData); // Armazena o ID do WebSocket no estado
+
+  //     // Agora, você pode realizar a requisição GET usando o ID recebido do WebSocket
+  //     if (idFromWebSocket !== null) {
+  //       fetch(`http://10.107.144.14:3000/products/${idFromWebSocket}`, {
+  //         headers: {
+  //           'Authorization': `Bearer ${token}`,
+  //         }
+  //       })
+  //         .then(response => response.json())
+  //         .then(data => {
+  //           // Faça o que precisar com os dados recebidos do GET
+  //           console.log('Dados recebidos do GET:', data);
+  //         })
+  //         .catch(error => {
+  //           console.error('Erro ao buscar dados via GET:', error);
+  //         });
+  //     }
+  //   });
+
+  //   return () => {
+  //     // Remova os manipuladores, se necessário
+  //   };
+  // }, [idFromWebSocket]); 
 
   return (
     <Layout>
@@ -57,7 +95,7 @@ export default function QrCode() {
           </span>
         </div> */}
         {scanResult
-          ? <div>success <a href={"http://" + scanResult}></a></div>
+          ? <div>success <a href={"http://" + scanResult}>{scanResult}</a></div>
           : <div id="reader"></div>
         }
 

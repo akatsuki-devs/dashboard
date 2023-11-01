@@ -17,6 +17,7 @@ module.exports = {
       pink: '#ff49db',
       grayMedium: '#E5E5E5',
       lightOrange: '#FFB29D',
+      beige: '#FFEDE1',
       second:'#f7fafc',
       gradientBackground: '51% #CBCBCB',
       'midnight': '#121063',

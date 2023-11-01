@@ -53,6 +53,8 @@ const Produtos = () => {
     preparationTime: null
   });
 
+
+
   const handleToggle = (value) => {
 
     setDisponibility(value);
@@ -94,7 +96,8 @@ const Produtos = () => {
 
     console.log('deletar')
     console.log(productToDelete, 'id fetch')
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg2NjIzNDEsImV4cCI6MTY5ODY3MjM0MX0.IeC1Th05ia3DVy5bfiL-yDw9FgSqnpIs0y-Bjg_09ns';
+    //const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg3NDk5ODEsImV4cCI6MTY5ODc1OTk4MX0.C0H5ZOr0n5JtcQJSaNr3REdqhH9HFLzJ-uIaRWHqJLk';
+    const token = localStorage.getItem('token');
 
     console.log(token)
 
@@ -143,7 +146,8 @@ const Produtos = () => {
 
     // Verifique se productToEdit não é nulo antes de fazer o fetch
     if (productToEdit !== null) {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg2NjIzNDEsImV4cCI6MTY5ODY3MjM0MX0.IeC1Th05ia3DVy5bfiL-yDw9FgSqnpIs0y-Bjg_09ns';
+     // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg3NDk5ODEsImV4cCI6MTY5ODc1OTk4MX0.C0H5ZOr0n5JtcQJSaNr3REdqhH9HFLzJ-uIaRWHqJLk';
+     const token = localStorage.getItem('token');
 
       fetch(`http://10.107.144.14:3000/products/${productToEdit}`, {
         method: 'GET',
@@ -199,7 +203,8 @@ const Produtos = () => {
 
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg2NjIzNDEsImV4cCI6MTY5ODY3MjM0MX0.IeC1Th05ia3DVy5bfiL-yDw9FgSqnpIs0y-Bjg_09ns';
+   // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg3NDk5ODEsImV4cCI6MTY5ODc1OTk4MX0.C0H5ZOr0n5JtcQJSaNr3REdqhH9HFLzJ-uIaRWHqJLk';
+   const token = localStorage.getItem('token');
 
     fetch("http://10.107.144.14:3000/products/types", {
       method: "GET",
@@ -251,7 +256,9 @@ const Produtos = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg2NjIzNDEsImV4cCI6MTY5ODY3MjM0MX0.IeC1Th05ia3DVy5bfiL-yDw9FgSqnpIs0y-Bjg_09ns';
+    const token = localStorage.getItem('token');
+
+   // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg3NDk5ODEsImV4cCI6MTY5ODc1OTk4MX0.C0H5ZOr0n5JtcQJSaNr3REdqhH9HFLzJ-uIaRWHqJLk';
     const preparationTimeValue = preparationTime === "" ? null : parseInt(preparationTime);
 
     const data = {
@@ -383,7 +390,8 @@ const Produtos = () => {
 
 
   useEffect(() => {
-    const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg2NjIzNDEsImV4cCI6MTY5ODY3MjM0MX0.IeC1Th05ia3DVy5bfiL-yDw9FgSqnpIs0y-Bjg_09ns';
+   // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg3NDk5ODEsImV4cCI6MTY5ODc1OTk4MX0.C0H5ZOr0n5JtcQJSaNr3REdqhH9HFLzJ-uIaRWHqJLk';
+   const token = localStorage.getItem('token');
 
     fetch("http://10.107.144.14:3000/products/", {
       method: "GET",
@@ -481,7 +489,9 @@ const Produtos = () => {
                         <tr className=" text-sm font-medium dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" key={product.id}>
                           <td scope="row" className="px-6 py-4">
                             <span className="items-center justify-center w-[38px] h-[38px]">
-                              <Image className="rounded-full" src={ImageTeste} alt="imagem teste" height={38} width={38} />
+                              {/* <Image className="rounded-full" src={ImageTeste} alt="imagem teste" height={38} width={38} /> */}
+
+                              <img  className="rounded-full" src={product.photo} alt="imagem teste"  height={38} width={38} />
                             </span>
 
                           </td>
