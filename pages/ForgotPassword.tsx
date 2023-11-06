@@ -63,7 +63,9 @@ export default function ForgotPassword() {
   }, [userId, token]);
 
   return (
-    <Model image={{ url: second, alt: "teste", height: 200, width: 1000 }}>
+    <Model image={{ url: second, alt: "teste", 
+    //height: 200, width: 1000
+     }}>
       <CardForm
         title="Redefinir Senha"
         subtitle="Guarde sua nova senha!"
