@@ -1,8 +1,9 @@
-import CardForm from "@/components/Card";
+//import CardForm from "@/components/Card";
+import CardForm from "../components/Card";
 import React, { useState } from 'react';
 import Input from "../components/CustomInput";
 import Model from "../components/Model";
-import third from "../../public/third.png";
+import third from "../components/images/third.svg";
 import { performApi } from '../utils/performApi';
 
 export default function ResetPassword() {

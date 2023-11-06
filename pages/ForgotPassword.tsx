@@ -2,7 +2,7 @@ import { useState, useEffect, Suspense } from 'react';
 import CardForm from "../components/Card";
 import Input from "../components/CustomInput";
 import Model from "../components/Model";
-import second from "../../public/teste.png"
+import second from "../components/images/teste.svg"
 import { performApi } from '../utils/performApi';
 import { useRouter } from 'next/router';
 import Loading from '../components/Loading';
