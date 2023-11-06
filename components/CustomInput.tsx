@@ -31,7 +31,7 @@ export default function Input(props: InputProps) {
         <div className="w-72">
           {props.forgotPassoword && (
             <Link
-              href="/reset-password"
+              href="/ResetPassword"
               className="text-gray-400 text-xs flex items-end justify-end"
             >
               Esqueceu a senha?
