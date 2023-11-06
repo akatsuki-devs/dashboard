@@ -32,7 +32,9 @@ export default function ResetPassword() {
     }
 
     return (
-        <Model image={{ url: third, alt: "redefinir-senha", height: 200, width: 300 }}>
+        <Model image={{ url: third, alt: "redefinir-senha",
+         //height: 200, width: 300 
+         }}>
             <CardForm
                 title="Redefinir Senha"
                 subtitle="Esqueceu sua senha?"
