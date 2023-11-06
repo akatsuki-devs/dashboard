@@ -101,7 +101,7 @@ const Produtos = () => {
 
     console.log(token)
 
-    fetch(`http://10.107.144.14:3000/products/${productToDelete}`, {
+    fetch(`http://10.107.144.05:3000/products/${productToDelete}`, {
       method: 'DELETE',
       headers: {
         Accept: "application/json",
@@ -149,7 +149,7 @@ const Produtos = () => {
      // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg3NDk5ODEsImV4cCI6MTY5ODc1OTk4MX0.C0H5ZOr0n5JtcQJSaNr3REdqhH9HFLzJ-uIaRWHqJLk';
      const token = localStorage.getItem('token');
 
-      fetch(`http://10.107.144.14:3000/products/${productToEdit}`, {
+      fetch(`http://10.107.144.05:3000/products/${productToEdit}`, {
         method: 'GET',
         headers: {
           Accept: "application/json",
@@ -206,7 +206,7 @@ const Produtos = () => {
    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg3NDk5ODEsImV4cCI6MTY5ODc1OTk4MX0.C0H5ZOr0n5JtcQJSaNr3REdqhH9HFLzJ-uIaRWHqJLk';
    const token = localStorage.getItem('token');
 
-    fetch("http://10.107.144.14:3000/products/types", {
+    fetch("http://10.107.144.05:3000/products/types", {
       method: "GET",
       headers: {
         Accept: "application/json",
@@ -299,7 +299,7 @@ const Produtos = () => {
 
     console.log('Dados do produto:', { data });
 
-    fetch('http://10.107.144.14:3000/products', {
+    fetch('http://10.107.144.05:3000/products', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -393,7 +393,7 @@ const Produtos = () => {
    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg3NDk5ODEsImV4cCI6MTY5ODc1OTk4MX0.C0H5ZOr0n5JtcQJSaNr3REdqhH9HFLzJ-uIaRWHqJLk';
    const token = localStorage.getItem('token');
 
-    fetch("http://10.107.144.14:3000/products/", {
+    fetch("http://10.107.144.05:3000/products/", {
       method: "GET",
       headers: {
         Accept: "application/json",

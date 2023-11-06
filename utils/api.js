@@ -45,7 +45,7 @@
 
 // POST
 export const sendData = async (path, method, body) => {
-    const response = await fetch(`http://10.107.144.14:3000/${path}`, {
+    const response = await fetch(`http://10.107.144.05:3000/${path}`, {
         method: method,
         headers: {
             Accept: "application/json",
@@ -59,7 +59,7 @@ export const sendData = async (path, method, body) => {
 
 // GET
 export const getData = async (path, token) => {
-    const response = await fetch(`http://10.107.144.14:3000/${path}`, {
+    const response = await fetch(`http://10.107.144.05:3000/${path}`, {
         headers: {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${token}`
@@ -70,7 +70,7 @@ export const getData = async (path, token) => {
 }
 
 export const deleteData = async (path, token) => {
-    const response = await fetch(`http://10.107.144.19:3000/${path}`, {
+    const response = await fetch(`http://10.107.144.05:3000/${path}`, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json",

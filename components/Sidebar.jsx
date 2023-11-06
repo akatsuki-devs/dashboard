@@ -32,6 +32,7 @@ const menuItems = [
   { id: 5, label: "Verificar QrCode", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/qrCode" },
   // { id: 6, label: "mudar", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/mudar" },
   { id: 7, label: "login", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/login" },
+  { id: 8, label: "ForgotPassword", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/ForgotPassword" },
 
 ];
 

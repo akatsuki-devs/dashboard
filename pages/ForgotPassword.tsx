@@ -1,13 +1,13 @@
 import { useState, useEffect, Suspense } from 'react';
-import CardForm from "./Card";
-import Input from "./CustomInput";
-import Model from "./Model";
+import CardForm from "../components/Card";
+import Input from "../components/CustomInput";
+import Model from "../components/Model";
 import second from "../../public/teste.png"
 import { performApi } from '../utils/performApi';
 import { useRouter } from 'next/router';
-import Loading from './Loading';
+import Loading from '../components/Loading';
 import React from 'react';
-const ErrorMessage = React.lazy(() => import('./Message'));
+const ErrorMessage = React.lazy(() => import('../components/Message'));
 
 
 
