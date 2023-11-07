@@ -22,7 +22,7 @@ export default function QrCode() {
     scanner.render(success);
 
     function success(result) {
-      scanner.clear();
+    // scanner.clear();
       setScanResult(result);
       console.log('result é ' + result);
 
@@ -36,10 +36,18 @@ export default function QrCode() {
     socket.on("message", (data) => {
       console.log("Dados recebidos do servidor:", data);
       // Faça o que for necessário com os dados recebidos do servidor
+      
+     
+  if (data && data.text) {
+    console.log('Valor da propriedade "text":', data.text);
+
+  } else {
+    console.log('A propriedade "text" não está presente em data');
+  }
     });
-    return () => {
-      socket.disconnect(); // Desconectar o socket ao desmontar o componente
-    };
+    // return () => {
+    //   socket.disconnect(); // Desconectar o socket ao desmontar o componente
+    // };
   }, []);
 
   return (
