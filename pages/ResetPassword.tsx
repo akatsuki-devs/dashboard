@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Input from "../components/CustomInput";
 import Model from "../components/Model";
 import third from "../components/images/third.svg";
-import { performApi } from '../utils/performApi';
+import { sendData,getData } from "../utils/api"
 
 export default function ResetPassword() {
     const [email, setEmail] = useState<string>("");
@@ -22,7 +22,7 @@ export default function ResetPassword() {
             return;
         }
         
-        const data = await performApi.sendData("forgot-password", "POST", { email });
+        const data = await sendData("forgot-password", "POST", { email });
 
         if (data.statusCode === 201) {
             setInfo(data.message);

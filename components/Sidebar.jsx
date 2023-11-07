@@ -34,6 +34,7 @@ const menuItems = [
   { id: 7, label: "login", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/login" },
   { id: 8, label: "ForgotPassword", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/ForgotPassword" },
   { id: 9, label: "ResetPassword", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/ResetPassword" },
+  { id: 10, label: "historicoDePedidos", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/historicoDePedidos" },
 
 ];
 
