@@ -1,29 +1,28 @@
+import { useDispatch, useSelector } from 'react-redux';
+import Layout from '../components/Layout';
 
-import { useDispatch, useSelector } from "react-redux";
-import Layout from "../components/Layout";
-import { decrement, increment } from "../redux/features/checkOrder/checkOrder";
+export default function historicoDePedidos() {
+function teste() {
+    const qrCodeDataList = useSelector((state) => state.qrCode.qrCodesData);
 
-export function historicoDePedidos() {
-  const count = useSelector((state) => state.counter.value)
-  const dispatch = useDispatch()
-
-  return (
-    <div>
-      <div>
-        <button
-          aria-label="Increment value"
-          onClick={() => dispatch(increment())}
-        >
-          Increment
-        </button>
-        <span>{count}</span>
-        <button
-          aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
-        >
-          Decrement
-        </button>
-      </div>
-    </div>
-  )
+    console.log(qrCodeDataList)
 }
+    return (
+     // <><h1>teste</h1></>
+        <div>
+          {qrCodeDataList && qrCodeDataList.length > 0 ? (
+            qrCodeDataList.map((qrData, index) => (
+              <div key={index}>
+                <h2>Pedido ID: {qrData.id}</h2>
+                <p>Status: {qrData.status}</p>
+                <p>Total: {qrData.total}</p>
+                {/* Renderize outros detalhes do pedido conforme necessário */}
+              </div>
+            ))
+          ) : (
+            <p>Sem dados de QR Code disponíveis.</p>
+          )}
+        </div>
+     
+    );
+  }

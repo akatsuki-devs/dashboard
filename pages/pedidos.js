@@ -2,6 +2,7 @@ import React from "react";
 import Layout from "../components/Layout";
 import CardProdutos from "../components/cardPedido"
 import { useState } from "react";
+import { useRouter } from 'next/router';
 
 export default function Pedidos() {
   // Modal de cadastro open and close
@@ -15,6 +16,8 @@ export default function Pedidos() {
     setIsOpen(false);
   };
 
+
+  
   return (
     <>
       <Layout>

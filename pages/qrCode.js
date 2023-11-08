@@ -6,12 +6,14 @@ import { Html5QrcodeScanner } from "html5-qrcode";
 import { useState } from "react";
 import socket from "./WebSocketClient"; // Importe o cliente WebSocket
 import { sendData,getData } from "../utils/api"
-
+import { addQRCodeData  } from '../redux/qrCodesSlice';
+import { useDispatch } from 'react-redux';
 export default function QrCode() {
 
   const [scanResult, setScanResult] = useState(null);
   const [idFromWebSocket, setIdFromWebSocket] = useState(null);
-  
+  const dispatch = useDispatch();
+
   useEffect(() => {
     const scanner = new Html5QrcodeScanner('reader', {
       qrbox: {
@@ -55,6 +57,9 @@ fetch(`http://10.107.144.05:3000/carts-by-user/${parsedText}`, {
       .then((responseData) => {
         // Aqui você pode lidar com a resposta do servidor, se necessário
         console.log('Resposta do servidor: certo', responseData);
+        dispatch(addQRCodeData(responseData));
+        console.log(addQRCodeData(responseData))
+
       })
       .catch((error) => {
         // Lidar com erros, se houver algum
