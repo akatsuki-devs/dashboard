@@ -14,7 +14,7 @@ import CardProdutos from "../components/cardProdutos";
 import { useState } from "react";
 
 
-export default function Home() {
+export default function dashboard() {
   function redirectPedidos() {
     var urlDestino = "/pedidos";
     window.location.assign(urlDestino);

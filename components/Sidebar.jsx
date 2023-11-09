@@ -19,21 +19,18 @@ import {
   IconCoffee,
   IconUser,
   IconFileDescription,
-  IconQrcode
+  IconQrcode 
 } from '@tabler/icons-react';
 
 
 // essas são as rotas a partir dos icons de menu
 const menuItems = [
-  { id: 1, label: "Menu", icon: (() => <IconHome2 color='#e5e5e5' width={26} height={26} />), link: "/" },
+  { id: 1, label: "dashboard", icon: (() => <IconHome2 color='#e5e5e5' width={26} height={26} />), link: "/dashboard" },
   { id: 2, label: "Produtos", icon: (() => <IconCoffee color='#e5e5e5' width={26} height={26} />), link: "/produtos" },
   { id: 3, label: "Colaborador", icon: (() => <IconUser color='#e5e5e5' width={26} height={26} />), link: "/colaborador" },
   { id: 4, label: "Pedidos", icon: (() => <IconFileDescription color='#e5e5e5' width={26} height={26} />), link: "/pedidos" },
   { id: 5, label: "Verificar QrCode", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/qrCode" },
   // { id: 6, label: "mudar", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/mudar" },
-  { id: 7, label: "login", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/login" },
-  { id: 8, label: "ForgotPassword", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/ForgotPassword" },
-  { id: 9, label: "ResetPassword", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/ResetPassword" },
   { id: 10, label: "historicoDePedidos", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/historicoDePedidos" },
 
 ];

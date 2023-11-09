@@ -1,6 +1,14 @@
+import React, { useState } from "react";
+import CardForm from "../components/Card";
+import mypic from "../components/images/group-image.svg";
+import Input from "../components/CustomInput";
+import Model from "../components/Model";
+import { sendData, getData } from "../utils/api";
+import { setCookie } from 'cookies-next';
+import { useRouter } from 'next/router';
 
 
-export default function Login() {
+export default function Home() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [erro, setErro] = useState<string>("");
@@ -98,4 +106,4 @@ export default function Login() {
       </CardForm>
     </Model>
   );
-}
+};

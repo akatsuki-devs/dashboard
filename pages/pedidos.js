@@ -17,7 +17,20 @@ export default function Pedidos() {
   };
 
 
+  const pedidos = [];
+
+
+
+// function verificarIdRepetidos(){
+// //aqui verificar se o numero do webSocketë repetido
+// if(){}else()
+// }
   
+
+function getDadosArray(){
+  // aqui vai ter um for para fazer o get para cada i do array
+
+}
   return (
     <>
       <Layout>
