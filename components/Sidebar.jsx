@@ -19,19 +19,20 @@ import {
   IconCoffee,
   IconUser,
   IconFileDescription,
-  IconQrcode 
+  IconQrcode,
+  IconChecklist
 } from '@tabler/icons-react';
 
 
 // essas são as rotas a partir dos icons de menu
 const menuItems = [
-  { id: 1, label: "dashboard", icon: (() => <IconHome2 color='#e5e5e5' width={26} height={26} />), link: "/dashboard" },
+  { id: 1, label: "Home", icon: (() => <IconHome2 color='#e5e5e5' width={26} height={26} />), link: "/dashboard" },
   { id: 2, label: "Produtos", icon: (() => <IconCoffee color='#e5e5e5' width={26} height={26} />), link: "/produtos" },
   { id: 3, label: "Colaborador", icon: (() => <IconUser color='#e5e5e5' width={26} height={26} />), link: "/colaborador" },
   { id: 4, label: "Pedidos", icon: (() => <IconFileDescription color='#e5e5e5' width={26} height={26} />), link: "/pedidos" },
   { id: 5, label: "Verificar QrCode", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/qrCode" },
   // { id: 6, label: "mudar", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/mudar" },
-  { id: 10, label: "historicoDePedidos", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/historicoDePedidos" },
+  { id: 10, label: "Histórico de pedidos", icon: (() => <IconChecklist color='#e5e5e5' width={26} height={26} />), link: "/historicoDePedidos" },
 
 ];
 
