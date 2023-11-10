@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import Layout from '../components/Layout'
+import Layout from '../../components/Layout'
 import Image from "next/image";
 import { IconEdit } from '@tabler/icons-react';
 import { IconTrash } from '@tabler/icons-react';
-import TableColaborador from "../components/tablesProdutosColaboradores";
 
 
 export default function Colaborador() {

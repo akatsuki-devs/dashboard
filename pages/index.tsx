@@ -5,7 +5,7 @@ import Input from "../components/CustomInput";
 import Model from "../components/Model";
 import { sendData, getData } from "../utils/api";
 import { setCookie } from 'cookies-next';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/router'; 
 
 
 export default function Home() {
@@ -50,7 +50,7 @@ export default function Home() {
           console.log(login.userType)
 
           if(login.userType === "COLABORATOR" ||login.userType ===  "ADMIN" ){
-            router.push("/dashboard")
+            router.push("/dashboard/home")
           }else{
             console.log('nao permitido')
             //setPermition("Nao permitido")
@@ -67,6 +67,8 @@ export default function Home() {
       setErro("Ocorreu um erro durante o login.");
     }
   };
+
+  
 
   return (
     <Model image={{

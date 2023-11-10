@@ -1,6 +1,5 @@
 import React from "react";
-import Layout from "../components/Layout";
-import CardProdutos from "../components/cardPedido"
+import Layout from "../../components/Layout";
 import { useState } from "react";
 import { useRouter } from 'next/router';
 

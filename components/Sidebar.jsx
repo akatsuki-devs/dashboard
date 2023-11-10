@@ -4,14 +4,9 @@ import { useRouter } from "next/router";
 import React, { useState, useMemo, } from "react";
 import { FaHamburger } from 'react-icons/fa';
 import {
-  ArticleIcon,
   CollapsIcon,
-  HomeIcon,
   LogoIcon,
   LogoutIcon,
-  UsersIcon,
-  VideosIcon,
-  // HamburguerIcon,
 } from "./icons";
 
 import {
@@ -22,17 +17,18 @@ import {
   IconQrcode,
   IconChecklist
 } from '@tabler/icons-react';
+import { useLogout } from './logout';
 
 
 // essas são as rotas a partir dos icons de menu
 const menuItems = [
-  { id: 1, label: "Home", icon: (() => <IconHome2 color='#e5e5e5' width={26} height={26} />), link: "/dashboard" },
-  { id: 2, label: "Produtos", icon: (() => <IconCoffee color='#e5e5e5' width={26} height={26} />), link: "/produtos" },
-  { id: 3, label: "Colaborador", icon: (() => <IconUser color='#e5e5e5' width={26} height={26} />), link: "/colaborador" },
-  { id: 4, label: "Pedidos", icon: (() => <IconFileDescription color='#e5e5e5' width={26} height={26} />), link: "/pedidos" },
-  { id: 5, label: "Verificar QrCode", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/qrCode" },
+  { id: 1, label: "Home", icon: (() => <IconHome2 color='#e5e5e5' width={26} height={26} />), link: "/dashboard/home" },
+  { id: 2, label: "Produtos", icon: (() => <IconCoffee color='#e5e5e5' width={26} height={26} />), link: "/dashboard/produtos" },
+  { id: 3, label: "Colaborador", icon: (() => <IconUser color='#e5e5e5' width={26} height={26} />), link: "/dashboard/colaborador" },
+  { id: 4, label: "Pedidos", icon: (() => <IconFileDescription color='#e5e5e5' width={26} height={26} />), link: "/dashboard/pedidos" },
+  { id: 5, label: "Verificar QrCode", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/dashboard/qrCode" },
   // { id: 6, label: "mudar", icon: (() => <IconQrcode color='#e5e5e5' width={26} height={26} />), link: "/mudar" },
-  { id: 10, label: "Histórico de pedidos", icon: (() => <IconChecklist color='#e5e5e5' width={26} height={26} />), link: "/historicoDePedidos" },
+  { id: 10, label: "Histórico de pedidos", icon: (() => <IconChecklist color='#e5e5e5' width={26} height={26} />), link: "/dashboard/historicoDePedidos" },
 
 ];
 
@@ -40,6 +36,8 @@ const Sidebar = () => {
   //[ estado inicial, estado final ] 
   const [toggleCollapse, setToggleCollapse] = useState(false);
   const [isCollapsible, setIsCollapsible] = useState(false);
+
+  const handleLogout = useLogout();
 
   const router = useRouter();
 
@@ -94,7 +92,7 @@ const Sidebar = () => {
     >
       <div className="flex flex-col ">
         <div className="flex  flex-col items-center justify-between relative ">
-          
+
           {/* essas linhas do button servem para dizer 
             que pode ser fechado e aberto novamente */}
           <div className="flex h-16 justify-center items-center">
@@ -147,9 +145,13 @@ const Sidebar = () => {
           <LogoutIcon />
         </div>
         {!toggleCollapse && (
-          <span className={classNames("text-md font-medium text-white")}>
+          <button
+            onClick={handleLogout}
+            className={
+              classNames("text-md font-medium text-white")
+            }>
             Logout
-          </span>
+          </button>
         )}
       </div>
     </div>

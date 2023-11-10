@@ -1,12 +1,12 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
-import Layout from "../components/Layout";
-import TakePhoto from "../components/icons/images/take-photo.png";
+import Layout from "../../components/Layout";
+import TakePhoto from "../../components/icons/images/take-photo.png";
 import { Html5QrcodeScanner } from "html5-qrcode";
 import { useState } from "react";
-import socket from "./WebSocketClient"; // Importe o cliente WebSocket
-import { sendData,getData } from "../utils/api"
-import { addQRCodeData  } from '../redux/qrCodesSlice';
+import socket from "../WebSocketClient"; // Importe o cliente WebSocket
+import { sendData,getData } from "../../utils/api"
+import { addQRCodeData  } from '../../redux/qrCodesSlice';
 import { useDispatch } from 'react-redux';
 export default function QrCode() {
 

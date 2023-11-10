@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../components/Layout';
+import Layout from '../../components/Layout';
 import { IconEdit } from '@tabler/icons-react';
 import { IconTrash } from '@tabler/icons-react';
-import TableProdutos from "../components/tablesProdutosColaboradores";
+import TableProdutos from "../../components/tablesProdutosColaboradores";
 import Image from 'next/image';
-import ImageTeste from "../components/icons/images/imagemFruta.png";
+import ImageTeste from "../../components/icons/images/imagemFruta.png";
 import {
   getDownloadURL,
   uploadBytes,
   ref,
 
 } from 'firebase/storage'
-import { storage } from '../firebase';
+import { storage } from '../../firebase';
 import NumberFormat from 'react-number-format';
 
 
+
 const Produtos = () => {
+
+  //________________________________________________________________________________________________________________________________________//
   const [name, setName] = useState('');
   const [isNameVazio, setIsNameVazio] = useState(false);
 
@@ -53,13 +56,15 @@ const Produtos = () => {
     preparationTime: null
   });
 
-
+  //________________________________________________________________________________________________________________________________________//
 
   const handleToggle = (value) => {
 
     setDisponibility(value);
     setButtonSelected(value); // Set the buttonSelected state
   };
+
+    //________________________________________________________________________________________________________________________________________//
   // modal de cadastro open and close
 
 
@@ -91,7 +96,7 @@ const Produtos = () => {
     setIsOpenModalDelete(true);
   }
 
-
+  //________________________________________________________________________________________________________________________________________//
   const DeleteProductModal = (e) => {
 
     console.log('deletar')
@@ -108,6 +113,7 @@ const Produtos = () => {
         'Authorization': `Bearer ${token}`, // token do admin o do matheus
       },
     })
+    
       .then((response) => response.json())
       // .then((responseData) => {
       //   // Lidar com a resposta do servidor, se necessário
@@ -139,7 +145,7 @@ const Produtos = () => {
     window.location.reload()
     setIsOpenModalDelete(false);
   }
-
+  //________________________________________________________________________________________________________________________________________//
   // modal de edição open and close
   useEffect(() => {
     console.log(productToEdit, 'useState');
@@ -184,23 +190,67 @@ const Produtos = () => {
     setIsOpenEdit(false);
 
   };
+  //________________________________________________________________________________________________________________________________________//
+  //const EdiProductModal = (e) => {
+   // e.preventDefault();
+   // console.log('confirmar com id ')
 
-  const EdiProductModal = (e) => {
-    e.preventDefault();
-    console.log('confirmar com id ',)
-
+    
 
     // Implemente a lógica para determinar campos modificados e construir o objeto JSON para enviar com o PUT.
-    const updatedData = {};
-    for (const key in formData) {
-      if (formData[key] !== originalData[key]) {
-        updatedData[key] = formData[key];
+  //  const updatedData = {};
+   // for (const key in formData) {
+   //   if (formData[key] !== originalData[key]) {
+     //   updatedData[key] = formData[key];
+     // }
+    //}
+   // console.log('Dados a serem enviados:', updatedData);
+  //}
+
+  //________________________________________________________________________________________________________________________________________//
+  const EdiProductModal = async (e) => {
+    //e.preventDefault();
+
+    const token = localStorage.getItem('token');
+  
+    const data = {
+      // Inclua apenas os campos que precisam ser atualizados
+      name: formData.name,
+      description: formData.description,
+      productType: formData.productType,
+      price: formData.price,
+      preparationTime: formData.preparationTime,
+      disponibility: formData.disponibility,
+      // Adicione outros campos conforme necessário
+    };
+  
+    fetch(`http://10.107.144.5:3000/products/${productToEdit}`, {
+      method: 'PATCH', // Altere para PATCH
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(data),
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`Erro ao editar o produto: Status ${response.status}`);
       }
-    }
-    console.log('Dados a serem enviados:', updatedData);
-  }
+      return response.json();
+    })
+    .then((responseData) => {
+      console.log('Produto editado com sucesso:', responseData);
+      // Realize qualquer ação adicional após a edição bem-sucedida
+      setIsOpenEdit(false); // Feche o modal de edição, se necessário
+    })
+    .catch((error) => {
+      console.error('Erro ao editar o produto:', error.message);
+    });
+    window.location.reload()
 
-
+  };
+  
+  //________________________________________________________________________________________________________________________________________//
 
   useEffect(() => {
    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg3NDk5ODEsImV4cCI6MTY5ODc1OTk4MX0.C0H5ZOr0n5JtcQJSaNr3REdqhH9HFLzJ-uIaRWHqJLk';
@@ -253,7 +303,7 @@ const Produtos = () => {
     }
 
   };
-
+  //________________________________________________________________________________________________________________________________________//
   const handleSubmit = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem('token');
@@ -316,7 +366,7 @@ const Produtos = () => {
         // Lidar com erros, se houver algum
         console.error('Erro ao fazer a solicitação POST:', error);
       });
-    window.location.reload()
+  //  window.location.reload()
 
     setIsOpen(false);
   };
@@ -357,11 +407,6 @@ const Produtos = () => {
     }
   };
 
-
-
-
-
-
   // const uploadImage = async (uri) => {
   //   const blob = Promise < Blob > ((resolve, reject) => {
   //     const xhr = new XMLHttpRequest()
@@ -388,7 +433,7 @@ const Produtos = () => {
   // };
 
 
-
+  //________________________________________________________________________________________________________________________________________//
   useEffect(() => {
    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTWF0aGV1cyBTaXF1ZWlyYSBTaWx2YSIsImlkIjoxLCJpYXQiOjE2OTg3NDk5ODEsImV4cCI6MTY5ODc1OTk4MX0.C0H5ZOr0n5JtcQJSaNr3REdqhH9HFLzJ-uIaRWHqJLk';
    const token = localStorage.getItem('token');
@@ -420,10 +465,12 @@ const Produtos = () => {
   };
 
   // Função para limpar o valor do campo de entrada ao clicar
-  const handleClearField = (fieldName) => {
+  const handleClearField = (fieldName, data) => {
+
     setFormData({
+      
       ...formData,
-      [fieldName]: '',
+      [fieldName]: data,
     });
   };
   const handleFileInputChange = (event) => {
@@ -894,8 +941,8 @@ const Produtos = () => {
                         id="nome"
                         className="border rounded-lg border-gray p-2 mb-4 w-full"
                         value={formData.name}
-                        onClick={() => handleClearField('name')} // Limpa o campo ao clicar
-                        onChange={handleInputChange} // Atualiza o valor enquanto digita
+                        onChange={(e) => handleClearField('name', e.target.value)} // Atualiza o valor enquanto digita
+                        //onChange={handleInputChange} // Atualiza o valor enquanto digita
                       />
                     </div>
                   </div>
@@ -910,7 +957,8 @@ const Produtos = () => {
                         id="descricao"
                         className="h-11 border rounded-lg border-gray p-2 mb-4 w-full"
                         value={formData.description}
-                        onClick={() => handleClearField('description')} // Limpa o campo ao clicar
+                        onChange={(e) => handleClearField('description', e.target.value)} // Atualiza o valor enquanto digita
+                       // onClick={() => handleClearField('description')} // Limpa o campo ao clicar
                       />
                     </div>
                   </div>
@@ -953,7 +1001,8 @@ const Produtos = () => {
                           id="preco"
                           className="border h-11 rounded-lg border-gray p-2 mb-4 w-full"
                           value={formData.price}
-                          onClick={() => handleClearField('price')} // Limpa o campo ao clicar
+                        //  onClick={() => handleClearField('price')} // Limpa o campo ao clicar
+                          onChange={(e) => handleClearField('price', e.target.value)} 
                         />
                       </div>
                     </div>

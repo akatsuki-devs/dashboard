@@ -1,16 +1,16 @@
-import Layout from "../components/Layout";
-import DinheiroIcon from "../components/icons/images/iconDinheiro.jpg";
-import ImagemPao from "../components/icons/images/imagemPao.png";
-import ImagemFruta from "../components/icons/images/imagemFruta.png";
+import Layout from "../../components/Layout";
+import DinheiroIcon from "../../components/icons/images/iconDinheiro.jpg";
+import ImagemPao from "../../components/icons/images/imagemPao.png";
+import ImagemFruta from "../../components/icons/images/imagemFruta.png";
 import Image from "next/image";
 import { IconArrowDown } from '@tabler/icons-react';
 import React from "react";
-import ListOrder from "../components/listPedidos";
-import ImagePerfil1 from "../components/icons/images/foto-perfil-1.png";
-import ImagePerfil2 from "../components/icons/images/foto-perfil-2.png";
-import ImagePerfil3 from "../components/icons/images/foto-perfil-3.png";
-import CardCreditos from "../components/cardCredito";
-import CardProdutos from "../components/cardProdutos";
+import ListOrder from "../../components/listPedidos";
+import ImagePerfil1 from "../../components/icons/images/foto-perfil-1.png";
+import ImagePerfil2 from "../../components/icons/images/foto-perfil-2.png";
+import ImagePerfil3 from "../../components/icons/images/foto-perfil-3.png";
+import CardCreditos from "../../components/cardCredito";
+import CardProdutos from "../../components/cardProdutos";
 import { useState } from "react";
 
 
